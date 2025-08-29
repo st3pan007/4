@@ -401,7 +401,7 @@
             .menu-content {
                 grid-template-columns: 1fr;
                 padding: 6rem 2rem;
-                padding-bottom: 100px;
+                padding-bottom: 120px;
             }
         }
 
@@ -416,6 +416,63 @@
             display: flex;
             flex-direction: column;
             gap: 0.25rem;
+        }
+
+        /* Mobile menu extras */
+        .menu-mobile-extras {
+            display: none;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--color-border);
+        }
+        
+        @media (max-width: 968px) {
+            .menu-mobile-extras {
+                display: block;
+            }
+        }
+        
+        .menu-mobile-lang {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .menu-mobile-lang-btn {
+            padding: 0.75rem 1.5rem;
+            background: transparent;
+            border: 1px solid var(--color-border);
+            border-radius: 100px;
+            color: var(--color-text-muted);
+            font-size: 0.875rem;
+            font-family: var(--font-body);
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        .menu-mobile-lang-btn.active {
+            background: var(--color-accent);
+            border-color: var(--color-accent);
+            color: var(--color-bg);
+        }
+        
+        .menu-mobile-socials {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .menu-mobile-social {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-text);
+            text-decoration: none;
+            font-size: 1.5rem;
         }
 
         .menu-item {
@@ -683,14 +740,10 @@
             text-fill-color: transparent;
             white-space: nowrap;
             opacity: 0;
-            transform: translateY(40px);
-            filter: blur(8px);
         }
 
         .hero-title-morph-item:first-child {
             opacity: 1;
-            transform: translateY(0);
-            filter: blur(0);
         }
 
         .hero-cta-wrapper {
@@ -754,6 +807,52 @@
                 );
                 z-index: 0;
             }
+        }
+
+        /* Mobile gradient background */
+        @media (max-width: 968px) {
+            .dna::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: radial-gradient(ellipse at top left, rgba(185, 104, 255, 0.08) 0%, transparent 50%),
+                            radial-gradient(ellipse at bottom right, rgba(94, 139, 255, 0.08) 0%, transparent 50%);
+                z-index: 0;
+            }
+        }
+
+        /* Floating gradient orbs for DNA section */
+        .dna-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            pointer-events: none;
+        }
+        
+        @media (max-width: 968px) {
+            .dna-orb {
+                display: none;
+            }
+        }
+        
+        .dna-orb-1 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--color-accent) 0%, transparent 70%);
+            top: 10%;
+            left: -10%;
+        }
+        
+        .dna-orb-2 {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, #5E8BFF 0%, transparent 70%);
+            bottom: 20%;
+            right: -5%;
         }
 
         .dna-header {
@@ -851,6 +950,65 @@
             position: relative;
             background: var(--color-bg);
             overflow: hidden;
+        }
+
+        /* Mobile gradient background */
+        @media (max-width: 968px) {
+            .services::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: radial-gradient(ellipse at top right, rgba(94, 139, 255, 0.08) 0%, transparent 50%),
+                            radial-gradient(ellipse at bottom left, rgba(185, 104, 255, 0.08) 0%, transparent 50%);
+                z-index: 0;
+            }
+        }
+
+        /* Geometric shapes for Services */
+        .services-geo {
+            position: absolute;
+            opacity: 0.15;
+            pointer-events: none;
+        }
+        
+        @media (max-width: 968px) {
+            .services-geo {
+                display: none;
+            }
+        }
+        
+        .services-geo-1 {
+            width: 200px;
+            height: 200px;
+            top: 10%;
+            right: 5%;
+            background: linear-gradient(45deg, var(--color-accent) 0%, transparent 70%);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            filter: blur(2px);
+        }
+        
+        .services-geo-2 {
+            width: 150px;
+            height: 150px;
+            bottom: 15%;
+            left: 10%;
+            background: linear-gradient(135deg, #5E8BFF 0%, transparent 70%);
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+            filter: blur(3px);
+        }
+        
+        .services-geo-3 {
+            width: 250px;
+            height: 250px;
+            top: 40%;
+            left: -5%;
+            background: radial-gradient(circle, var(--color-accent) 0%, transparent 50%);
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            filter: blur(60px);
+            opacity: 0.2;
         }
 
         .services-header {
@@ -1116,6 +1274,30 @@
             overflow: hidden;
         }
 
+        /* Light rays for Portfolio */
+        .portfolio-rays {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.08;
+            pointer-events: none;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 100px,
+                rgba(185, 104, 255, 0.2) 100px,
+                rgba(185, 104, 255, 0.2) 101px
+            );
+        }
+        
+        @media (min-width: 969px) {
+            .portfolio-rays {
+                opacity: 0.1;
+            }
+        }
+
         .portfolio-header {
             text-align: center;
             margin-bottom: var(--space-xl);
@@ -1237,6 +1419,40 @@
             background: var(--color-bg);
             position: relative;
             overflow: hidden;
+        }
+
+        /* Constellation pattern for Process */
+        .process-constellation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+        
+        @media (min-width: 969px) {
+            .process-constellation {
+                opacity: 0.15;
+            }
+        }
+        
+        .constellation-dot {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--color-accent);
+            border-radius: 50%;
+            opacity: 0.6;
+        }
+        
+        .constellation-line {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
+            opacity: 0.3;
+            transform-origin: left center;
         }
 
         .process-header {
@@ -1499,6 +1715,23 @@
                 background: linear-gradient(180deg, var(--color-accent) 0%, transparent 100%);
                 transform: translateX(-50%);
                 opacity: 0.5;
+            }
+        }
+
+        /* Wave pattern for Contact */
+        .contact-waves {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 300px;
+            pointer-events: none;
+            opacity: 0.1;
+        }
+        
+        @media (min-width: 969px) {
+            .contact-waves {
+                opacity: 0.15;
             }
         }
 
@@ -2163,37 +2396,37 @@
                         <li class="menu-item">
                             <a href="#home" class="menu-link">
                                 <span class="menu-link-number">01</span>
-                                <span class="menu-link-text">Domů <span class="menu-link-arrow">→</span></span>
+                                <span class="menu-link-text">Domů <span class="menu-link-arrow">></span></span>
                             </a>
                         </li>
                         <li class="menu-item">
                             <a href="#dna" class="menu-link">
                                 <span class="menu-link-number">02</span>
-                                <span class="menu-link-text">O nás <span class="menu-link-arrow">→</span></span>
+                                <span class="menu-link-text">O nás <span class="menu-link-arrow">></span></span>
                             </a>
                         </li>
                         <li class="menu-item">
                             <a href="#services" class="menu-link">
                                 <span class="menu-link-number">03</span>
-                                <span class="menu-link-text">Služby <span class="menu-link-arrow">→</span></span>
+                                <span class="menu-link-text">Služby <span class="menu-link-arrow">></span></span>
                             </a>
                         </li>
                         <li class="menu-item">
                             <a href="#process" class="menu-link">
                                 <span class="menu-link-number">04</span>
-                                <span class="menu-link-text">Proces <span class="menu-link-arrow">→</span></span>
+                                <span class="menu-link-text">Proces <span class="menu-link-arrow">></span></span>
                             </a>
                         </li>
                         <li class="menu-item">
                             <a href="#portfolio" class="menu-link">
                                 <span class="menu-link-number">05</span>
-                                <span class="menu-link-text">Portfolio <span class="menu-link-arrow">→</span></span>
+                                <span class="menu-link-text">Portfolio <span class="menu-link-arrow">></span></span>
                             </a>
                         </li>
                         <li class="menu-item">
                             <a href="#contact" class="menu-link">
                                 <span class="menu-link-number">06</span>
-                                <span class="menu-link-text">Kontakt <span class="menu-link-arrow">→</span></span>
+                                <span class="menu-link-text">Kontakt <span class="menu-link-arrow">></span></span>
                             </a>
                         </li>
                     </ul>
@@ -2304,6 +2537,10 @@
 
     <!-- DNA Section -->
     <section class="dna" id="dna">
+        <!-- Background orbs -->
+        <div class="dna-orb dna-orb-1"></div>
+        <div class="dna-orb dna-orb-2"></div>
+        
         <div class="container">
             <div class="dna-header">
                 <span class="dna-label">Náš přístup</span>
@@ -2349,6 +2586,11 @@
 
     <!-- Services Section -->
     <section class="services" id="services">
+        <!-- Geometric shapes -->
+        <div class="services-geo services-geo-1"></div>
+        <div class="services-geo services-geo-2"></div>
+        <div class="services-geo services-geo-3"></div>
+        
         <div class="container">
             <div class="services-header">
                 <span class="services-label">Co umíme nejlépe</span>
@@ -2438,6 +2680,9 @@
 
     <!-- Portfolio Section -->
     <section class="portfolio" id="portfolio">
+        <!-- Light rays background -->
+        <div class="portfolio-rays"></div>
+        
         <div class="container">
             <div class="portfolio-header">
                 <span class="portfolio-label">Naše práce</span>
@@ -2513,6 +2758,9 @@
 
     <!-- Process Section -->
     <section class="process" id="process">
+        <!-- Constellation pattern background -->
+        <svg class="process-constellation" id="constellation"></svg>
+        
         <div class="container">
             <div class="process-header">
                 <span class="process-label">Jak pracujeme</span>
@@ -2614,6 +2862,18 @@
 
     <!-- Contact Section -->
     <section class="contact" id="contact">
+        <!-- Wave pattern background -->
+        <svg class="contact-waves" preserveAspectRatio="none" viewBox="0 0 1200 300">
+            <path d="M0,150 Q300,50 600,150 T1200,150 L1200,300 L0,300 Z" fill="url(#waveGradient)" opacity="0.3"/>
+            <path d="M0,200 Q300,100 600,200 T1200,200 L1200,300 L0,300 Z" fill="url(#waveGradient)" opacity="0.2"/>
+            <defs>
+                <linearGradient id="waveGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:#5E8BFF;stop-opacity:0.5" />
+                    <stop offset="100%" style="stop-color:#B968FF;stop-opacity:0.5" />
+                </linearGradient>
+            </defs>
+        </svg>
+        
         <div class="container">
             <div class="contact-container">
                 <div class="contact-header">
@@ -2919,46 +3179,39 @@
                     ease: "power3.out"
                 }, "-=0.4");
 
-            // Morphing text animation
+            // Morphing text animation - Simple crossfade
             const morphWords = document.querySelectorAll('.hero-title-morph-item');
             let currentIndex = 0;
 
-            // Initial state is already set in CSS, just ensure it's correct
-            gsap.set(morphWords[0], { opacity: 1, y: 0, filter: "blur(0px)" });
-            for(let i = 1; i < morphWords.length; i++) {
-                gsap.set(morphWords[i], { opacity: 0, y: 40, filter: "blur(8px)" });
-            }
+            // Ensure initial state
+            morphWords.forEach((word, index) => {
+                gsap.set(word, { opacity: index === 0 ? 1 : 0 });
+            });
             
-            // Morph animation loop
+            // Simple crossfade animation
             function morphText() {
                 const current = morphWords[currentIndex];
                 const nextIndex = (currentIndex + 1) % morphWords.length;
                 const next = morphWords[nextIndex];
 
-                gsap.timeline()
-                    .to(current, {
-                        opacity: 0,
-                        y: -40,
-                        filter: "blur(8px)",
-                        duration: 0.6,
-                        ease: "power3.in"
-                    })
-                    .set(current, { y: 40 })
-                    .to(next, {
-                        opacity: 1,
-                        y: 0,
-                        filter: "blur(0px)",
-                        duration: 0.6,
-                        ease: "power3.out"
-                    }, "-=0.3");
+                // Simple fade transition
+                gsap.to(current, {
+                    opacity: 0,
+                    duration: 0.5,
+                    ease: "power2.inOut"
+                });
+                
+                gsap.to(next, {
+                    opacity: 1,
+                    duration: 0.5,
+                    ease: "power2.inOut"
+                });
 
                 currentIndex = nextIndex;
             }
 
-            // Start morphing after initial animation
-            setTimeout(() => {
-                setInterval(morphText, 5000);
-            }, 2000);
+            // Start morphing after initial load
+            setInterval(morphText, 4000);
 
             // Adjust morph container width
             function adjustMorphWidth() {
@@ -3013,54 +3266,108 @@
                 }
             });
 
+            // Animate backgrounds (desktop only)
+            if (isDesktop()) {
+                // DNA orbs parallax
+                gsap.to('.dna-orb-1', {
+                    y: 100,
+                    x: 50,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: ".dna",
+                        start: "top bottom",
+                        end: "bottom top",
+                        scrub: 1
+                    }
+                });
+                
+                gsap.to('.dna-orb-2', {
+                    y: -80,
+                    x: -30,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: ".dna",
+                        start: "top bottom",
+                        end: "bottom top",
+                        scrub: 1
+                    }
+                });
+
+                // Services geometric shapes floating
+                gsap.timeline({repeat: -1})
+                    .to('.services-geo-1', {
+                        y: -20,
+                        rotation: 45,
+                        duration: 8,
+                        ease: "power1.inOut"
+                    })
+                    .to('.services-geo-1', {
+                        y: 0,
+                        rotation: 0,
+                        duration: 8,
+                        ease: "power1.inOut"
+                    });
+                    
+                gsap.timeline({repeat: -1})
+                    .to('.services-geo-2', {
+                        y: 30,
+                        rotation: -60,
+                        duration: 10,
+                        ease: "power1.inOut"
+                    })
+                    .to('.services-geo-2', {
+                        y: 0,
+                        rotation: 0,
+                        duration: 10,
+                        ease: "power1.inOut"
+                    });
+                    
+                gsap.to('.services-geo-3', {
+                    scale: 1.2,
+                    duration: 15,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: "power1.inOut"
+                });
+
+                // Portfolio rays subtle movement
+                gsap.to('.portfolio-rays', {
+                    backgroundPosition: "200px 200px",
+                    duration: 20,
+                    repeat: -1,
+                    ease: "none"
+                });
+
+                // Contact waves animation
+                gsap.timeline({repeat: -1})
+                    .to('.contact-waves path:first-child', {
+                        attr: {d: "M0,180 Q300,80 600,180 T1200,180 L1200,300 L0,300 Z"},
+                        duration: 4,
+                        ease: "power1.inOut"
+                    })
+                    .to('.contact-waves path:first-child', {
+                        attr: {d: "M0,150 Q300,50 600,150 T1200,150 L1200,300 L0,300 Z"},
+                        duration: 4,
+                        ease: "power1.inOut"
+                    });
+
+                // Create constellation pattern
+                createConstellation();
+            }
+
             // Section reveals
             const sections = gsap.utils.toArray('.dna-card, .service-card, .portfolio-item, .process-step');
             
             sections.forEach((section, i) => {
                 if (isMobile()) {
-                    // Mobile animations
-                    if (section.classList.contains('service-card')) {
-                        // Zigzag animation for service cards
-                        const isOdd = (Array.from(section.parentElement.children).indexOf(section) + 1) % 2 !== 0;
-                        gsap.fromTo(section,
-                            {
-                                opacity: 0,
-                                x: isOdd ? -30 : 30
-                            },
-                            {
-                                opacity: 1,
-                                x: 0,
-                                duration: 0.6,
-                                ease: "power3.out",
-                                scrollTrigger: {
-                                    trigger: section,
-                                    start: "top 80%",
-                                    once: true
-                                }
-                            }
-                        );
-                    } else {
-                        // Standard reveal for other elements
-                        gsap.fromTo(section,
-                            {
-                                opacity: 0,
-                                y: 30
-                            },
-                            {
-                                opacity: 1,
-                                y: 0,
-                                duration: 0.8,
-                                ease: "power3.out",
-                                scrollTrigger: {
-                                    trigger: section,
-                                    start: "top 80%",
-                                    once: true
-                                }
-                            }
-                        );
-                    }
+                    // Mobile: NO fade-in animations, elements are immediately visible
+                    gsap.set(section, {
+                        opacity: 1,
+                        y: 0,
+                        x: 0
+                    });
 
-                    // Active states for mobile
+                    // Active states only - can be multiple active for wave effect
                     if (section.classList.contains('dna-card') || 
                         section.classList.contains('service-card') || 
                         section.classList.contains('portfolio-item')) {
@@ -3071,43 +3378,16 @@
                             end: "bottom 65%",
                             onToggle: self => {
                                 if (self.isActive) {
-                                    // Remove active from siblings if portfolio
+                                    // Apply hover effect
                                     if (section.classList.contains('portfolio-item')) {
-                                        document.querySelectorAll('.portfolio-item').forEach(item => {
-                                            if (item !== section) {
-                                                // Remove portfolio hover effects from others
-                                                gsap.to(item, {
-                                                    clearProps: "all",
-                                                    duration: 0.3,
-                                                    ease: "power3.out"
-                                                });
-                                                const otherImage = item.querySelector('.portfolio-image');
-                                                const otherContent = item.querySelector('.portfolio-content');
-                                                if (otherImage) {
-                                                    gsap.to(otherImage, {
-                                                        scale: 1,
-                                                        duration: 0.5,
-                                                        ease: "power3.out"
-                                                    });
-                                                }
-                                                if (otherContent) {
-                                                    gsap.to(otherContent, {
-                                                        y: '100%',
-                                                        duration: 0.5,
-                                                        ease: "power3.out"
-                                                    });
-                                                }
-                                            }
-                                        });
-                                        
-                                        // Apply portfolio hover effect
+                                        // Portfolio hover effect
                                         const image = section.querySelector('.portfolio-image');
                                         const content = section.querySelector('.portfolio-content');
                                         
                                         if (image) {
                                             gsap.to(image, {
                                                 scale: 1.1,
-                                                duration: 0.8,
+                                                duration: 0.5,
                                                 ease: "power3.out"
                                             });
                                         }
@@ -3115,50 +3395,26 @@
                                         if (content) {
                                             gsap.to(content, {
                                                 y: 0,
-                                                duration: 0.5,
+                                                duration: 0.4,
                                                 ease: "power3.out"
                                             });
                                         }
-                                        
-                                        // Overlay effect
-                                        gsap.to(section, {
-                                            '&::before': {
-                                                opacity: 1
-                                            },
-                                            duration: 0.5
-                                        });
                                     } 
-                                    else if (section.classList.contains('dna-card')) {
-                                        // DNA card hover effect for mobile
+                                    else {
+                                        // DNA and Service cards hover effect
                                         gsap.to(section, {
                                             y: -3,
-                                            boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)',
-                                            borderColor: 'var(--color-accent-dim)',
-                                            duration: 0.4,
+                                            boxShadow: section.classList.contains('service-card') 
+                                                ? '0 20px 40px rgba(185, 104, 255, 0.3)'
+                                                : '0 20px 40px rgba(0, 0, 0, 0.3)',
+                                            borderColor: section.classList.contains('service-card')
+                                                ? 'var(--color-accent)'
+                                                : 'var(--color-accent-dim)',
+                                            duration: 0.3,
                                             ease: "power3.out"
                                         });
                                     }
-                                    else if (section.classList.contains('service-card')) {
-                                        // Service card hover effect for mobile (same as DNA cards)
-                                        gsap.to(section, {
-                                            y: -3,
-                                            boxShadow: '0 20px 40px rgba(185, 104, 255, 0.3)',
-                                            borderColor: 'var(--color-accent)',
-                                            duration: 0.4,
-                                            ease: "power3.out"
-                                        });
-                                        
-                                        // Also add background effect
-                                        gsap.to(section.querySelector('::before'), {
-                                            opacity: 1,
-                                            duration: 0.3
-                                        });
-                                    }
-                                    
-                                    section.classList.add('center-active');
                                 } else {
-                                    section.classList.remove('center-active');
-                                    
                                     // Remove hover effects
                                     if (section.classList.contains('portfolio-item')) {
                                         const image = section.querySelector('.portfolio-image');
@@ -3167,7 +3423,7 @@
                                         if (image) {
                                             gsap.to(image, {
                                                 scale: 1,
-                                                duration: 0.8,
+                                                duration: 0.5,
                                                 ease: "power3.out"
                                             });
                                         }
@@ -3175,41 +3431,27 @@
                                         if (content) {
                                             gsap.to(content, {
                                                 y: '100%',
-                                                duration: 0.5,
+                                                duration: 0.4,
                                                 ease: "power3.out"
                                             });
                                         }
-                                        
-                                        gsap.to(section, {
-                                            '&::before': {
-                                                opacity: 0
-                                            },
-                                            duration: 0.5
-                                        });
                                     }
-                                    else if (section.classList.contains('dna-card') || section.classList.contains('service-card')) {
-                                        // Remove hover effect
+                                    else {
+                                        // Remove hover from DNA and Service cards
                                         gsap.to(section, {
                                             y: 0,
                                             boxShadow: 'none',
                                             borderColor: 'var(--color-border)',
-                                            duration: 0.4,
+                                            duration: 0.3,
                                             ease: "power3.out"
                                         });
-                                        
-                                        if (section.classList.contains('service-card')) {
-                                            gsap.to(section.querySelector('::before'), {
-                                                opacity: 0,
-                                                duration: 0.3
-                                            });
-                                        }
                                     }
                                 }
                             }
                         });
                     }
                 } else {
-                    // Desktop animations
+                    // Desktop animations (unchanged)
                     gsap.fromTo(section,
                         {
                             opacity: 0,
@@ -3234,24 +3476,33 @@
             const headers = gsap.utils.toArray('.dna-header, .services-header, .portfolio-header, .process-header, .contact-header');
             
             headers.forEach(header => {
-                gsap.fromTo(header.children,
-                    {
-                        opacity: 0,
-                        y: 20
-                    },
-                    {
+                if (isMobile()) {
+                    // Mobile: no animation, immediately visible
+                    gsap.set(header.children, {
                         opacity: 1,
-                        y: 0,
-                        duration: 0.8,
-                        stagger: 0.1,
-                        ease: "power3.out",
-                        scrollTrigger: {
-                            trigger: header,
-                            start: "top 80%",
-                            once: true
+                        y: 0
+                    });
+                } else {
+                    // Desktop: fade in animation
+                    gsap.fromTo(header.children,
+                        {
+                            opacity: 0,
+                            y: 20
+                        },
+                        {
+                            opacity: 1,
+                            y: 0,
+                            duration: 0.8,
+                            stagger: 0.1,
+                            ease: "power3.out",
+                            scrollTrigger: {
+                                trigger: header,
+                                start: "top 80%",
+                                once: true
+                            }
                         }
-                    }
-                );
+                    );
+                }
             });
 
             // Process timeline progress (desktop only)
@@ -3285,6 +3536,72 @@
                     ScrollTrigger.refresh();
                 }, 250);
             });
+        }
+
+        // Create constellation pattern for process section
+        function createConstellation() {
+            const svg = document.getElementById('constellation');
+            if (!svg || isMobile()) return;
+            
+            const width = window.innerWidth;
+            const height = 400;
+            
+            // Create random dots
+            for (let i = 0; i < 15; i++) {
+                const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                const x = Math.random() * width;
+                const y = Math.random() * height;
+                
+                dot.setAttribute('cx', x);
+                dot.setAttribute('cy', y);
+                dot.setAttribute('r', '2');
+                dot.setAttribute('fill', '#B968FF');
+                dot.setAttribute('opacity', '0.6');
+                dot.classList.add('constellation-dot');
+                
+                svg.appendChild(dot);
+                
+                // Animate dots pulsing
+                gsap.to(dot, {
+                    opacity: 0.2,
+                    scale: 1.5,
+                    duration: 2 + Math.random() * 2,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: "power1.inOut",
+                    delay: Math.random() * 2
+                });
+            }
+            
+            // Create connecting lines between some dots
+            const dots = svg.querySelectorAll('.constellation-dot');
+            for (let i = 0; i < dots.length - 1; i += 2) {
+                const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                const dot1 = dots[i];
+                const dot2 = dots[i + 1];
+                
+                line.setAttribute('x1', dot1.getAttribute('cx'));
+                line.setAttribute('y1', dot1.getAttribute('cy'));
+                line.setAttribute('x2', dot2.getAttribute('cx'));
+                line.setAttribute('y2', dot2.getAttribute('cy'));
+                line.setAttribute('stroke', '#B968FF');
+                line.setAttribute('stroke-width', '1');
+                line.setAttribute('opacity', '0.2');
+                line.classList.add('constellation-line');
+                
+                svg.appendChild(line);
+                
+                // Animate lines
+                gsap.fromTo(line, {
+                    strokeDasharray: "5 10",
+                    strokeDashoffset: 0
+                }, {
+                    strokeDashoffset: -15,
+                    duration: 3,
+                    repeat: -1,
+                    ease: "none"
+                });
+            }
         }
 
         // Menu animations
@@ -3919,30 +4236,38 @@
             // Hover effect
             scrollTopBtn.addEventListener('mouseenter', () => {
                 gsap.to(scrollTopBtn, {
+                    scale: 1.1,
+                    rotation: 360,
                     backgroundColor: 'var(--color-accent)',
                     borderColor: 'var(--color-accent)',
+                    boxShadow: '0 10px 30px rgba(185, 104, 255, 0.4)',
                     y: -5,
-                    duration: 0.3,
+                    duration: 0.4,
                     ease: "power3.out"
                 });
                 
                 gsap.to('.scroll-top-icon', {
-                    color: 'var(--color-accent)',
+                    color: 'var(--color-bg)',
+                    scale: 1.2,
                     duration: 0.3
                 });
             });
             
             scrollTopBtn.addEventListener('mouseleave', () => {
                 gsap.to(scrollTopBtn, {
+                    scale: 1,
+                    rotation: 0,
                     backgroundColor: 'var(--color-surface)',
                     borderColor: 'var(--color-border)',
+                    boxShadow: 'none',
                     y: 0,
-                    duration: 0.3,
+                    duration: 0.4,
                     ease: "power3.out"
                 });
                 
                 gsap.to('.scroll-top-icon', {
                     color: 'var(--color-text)',
+                    scale: 1,
                     duration: 0.3
                 });
             });
