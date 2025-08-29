@@ -2536,19 +2536,26 @@
             z-index: 1; /* Between background (0) and content (2) */
             opacity: 0.4; /* Slightly visible */
             pointer-events: none;
-            display: block; /* Added display block */
-            height: 100vh; /* Default height as fallback */
+            display: none; /* Hidden by default, JS will show it */
             top: 100vh; /* Start after hero */
         }
         
         .mobile-guide-line-progress {
             position: absolute;
             top: 0;
-            left: 0;
-            width: 100%;
+            left: -1px; /* Center the wider bar */
+            width: 4px; /* 2px wider than base line */
             height: 0%;
-            background: var(--color-gradient-2);
+            background: linear-gradient(180deg, 
+                #FF6B9D 0%, 
+                #C66EFD 25%, 
+                #8E7BFF 50%, 
+                #5E8BFF 75%, 
+                #4ECDC4 100%
+            ); /* Cool vibrant gradient */
             transition: height 0.3s ease;
+            border-radius: 2px; /* Slight rounding for smoother look */
+            box-shadow: 0 0 10px rgba(185, 104, 255, 0.5); /* Glow effect */
         }
 
         /* Show on mobile */
@@ -3686,77 +3693,169 @@
             });
         });
 
-        // Mobile Guide Line - Dynamic Height Calculation
-        const guideLine = document.getElementById('mobileGuideLine');
-        const mobileGuideProgress = document.getElementById('mobileGuideProgress');
-        const heroSection = document.querySelector('.hero');
-        const contactForm = document.querySelector('.contact-form form');
-        
-        if (guideLine && heroSection && contactForm && window.innerWidth <= 968) {
-            // Function to update guide line height dynamically
-            const updateLineHeight = () => {
-                const startY = heroSection.offsetHeight;
-                const endY = contactForm.offsetTop + contactForm.offsetHeight / 2;
-                
-                guideLine.style.top = startY + 'px';
-                guideLine.style.height = (endY - startY) + 'px';
-            };
+        // Mobile Guide Line - Robust setup with multiple checks
+        function initGuideLine() {
+            const guideLine = document.getElementById('mobileGuideLine');
+            const mobileGuideProgress = document.getElementById('mobileGuideProgress');
+            const heroSection = document.querySelector('.hero');
+            const contactForm = document.querySelector('.contact-form form');
             
-            // Update on load and resize
-            updateLineHeight();
-            window.addEventListener('resize', updateLineHeight);
+            // Debug check
+            console.log('Guide line init check:', {
+                guideLine: !!guideLine,
+                heroSection: !!heroSection,
+                contactForm: !!contactForm,
+                windowWidth: window.innerWidth
+            });
             
-            // Update progress on scroll
-            const updateGuideProgress = () => {
-                const startPoint = heroSection.offsetHeight;
-                const endPoint = contactForm.offsetTop + contactForm.offsetHeight / 2;
-                const currentScroll = window.pageYOffset + window.innerHeight / 2;
-                
-                if (currentScroll > startPoint && currentScroll < endPoint) {
-                    let progress = ((currentScroll - startPoint) / (endPoint - startPoint)) * 100;
-                    progress = Math.min(Math.max(0, progress), 100);
-                    mobileGuideProgress.style.height = `${progress}%`;
-                } else if (currentScroll <= startPoint) {
-                    mobileGuideProgress.style.height = '0%';
-                } else if (currentScroll >= endPoint) {
-                    mobileGuideProgress.style.height = '100%';
+            if (!guideLine || !heroSection || !contactForm) {
+                console.error('Missing elements for guide line');
+                return;
+            }
+            
+            // Calculate and apply guide line
+            function applyGuideLine() {
+                if (window.innerWidth > 968) {
+                    guideLine.style.display = 'none';
+                    return;
                 }
-            };
+                
+                // Get positions
+                const heroHeight = heroSection.getBoundingClientRect().height;
+                const firstInput = contactForm.querySelector('.form-input'); // Get first input
+                const inputRect = firstInput ? firstInput.getBoundingClientRect() : contactForm.getBoundingClientRect();
+                const formPosition = inputRect.top + window.pageYOffset + 30; // Top of first input + 30px
+                const calculatedHeight = formPosition - heroHeight;
+                
+                console.log('Setting guide line:', {
+                    heroHeight,
+                    formPosition,
+                    calculatedHeight
+                });
+                
+                // Set inline styles directly
+                guideLine.style.position = 'absolute';
+                guideLine.style.left = '50%';
+                guideLine.style.transform = 'translateX(-50%)';
+                guideLine.style.width = '2px';
+                guideLine.style.background = '#B968FF';
+                guideLine.style.zIndex = '1';
+                guideLine.style.opacity = '0.4';
+                guideLine.style.pointerEvents = 'none';
+                guideLine.style.display = 'block';
+                guideLine.style.top = heroHeight + 'px';
+                guideLine.style.height = calculatedHeight + 'px';
+                
+                // Verify it was set
+                console.log('Verification - actual styles:', {
+                    display: guideLine.style.display,
+                    top: guideLine.style.top,
+                    height: guideLine.style.height
+                });
+                
+                // Setup progress tracking
+                setupProgressTracking(heroHeight, formPosition);
+            }
             
-            window.addEventListener('scroll', updateGuideProgress, { passive: true });
-            updateGuideProgress(); // Initial call
+            // Progress tracking
+            function setupProgressTracking(startY, endY) {
+                if (!mobileGuideProgress) return;
+                
+                function updateProgress() {
+                    const scrollCenter = window.pageYOffset + window.innerHeight / 2;
+                    let progress = ((scrollCenter - startY) / (endY - startY)) * 100;
+                    progress = Math.min(Math.max(0, progress), 100);
+                    mobileGuideProgress.style.height = progress + '%';
+                }
+                
+                window.addEventListener('scroll', updateProgress, { passive: true });
+                updateProgress();
+            }
+            
+            // Apply with delay to ensure layout is complete
+            setTimeout(applyGuideLine, 500);
+            
+            // Reapply on resize
+            let resizeTimer;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(applyGuideLine, 250);
+            });
+        }
+        
+        // Start initialization when page is fully loaded
+        if (document.readyState === 'complete') {
+            initGuideLine();
+        } else {
+            window.addEventListener('load', initGuideLine);
         }
 
-        // Center Observer for Mobile Guide Line - Earlier activation
+        // Mobile Active States - Precise scroll-based activation
         if (window.innerWidth <= 968) {
-            const centerObserver = new IntersectionObserver(
-                (entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('center-active');
-                        } else {
-                            entry.target.classList.remove('center-active');
+            const cards = [
+                ...document.querySelectorAll('.dna-card'),
+                ...document.querySelectorAll('.service-card'),
+                ...document.querySelectorAll('.portfolio-item')
+            ];
+            
+            if (cards.length > 0) {
+                // Function to check and activate cards
+                const updateActiveCards = () => {
+                    const triggerPoint = window.innerHeight * 0.65; // 35% from bottom = 65% from top
+                    let closestCard = null;
+                    let closestDistance = Infinity;
+                    
+                    // Find card closest to trigger point
+                    cards.forEach(card => {
+                        const rect = card.getBoundingClientRect();
+                        const cardTop = rect.top;
+                        const distance = Math.abs(cardTop - triggerPoint);
+                        
+                        // Check if card crosses the trigger line
+                        if (cardTop <= triggerPoint && rect.bottom > triggerPoint) {
+                            if (distance < closestDistance) {
+                                closestDistance = distance;
+                                closestCard = card;
+                            }
                         }
                     });
-                },
-                {
-                    rootMargin: '-25% 0px -25% 0px', // Earlier activation - 25% for better timing
-                    threshold: 0
-                }
-            );
-            
-            // Observe all cards
-            document.querySelectorAll('.dna-card').forEach(card => {
-                centerObserver.observe(card);
-            });
-            
-            document.querySelectorAll('.service-card').forEach(card => {
-                centerObserver.observe(card);
-            });
-            
-            document.querySelectorAll('.portfolio-item').forEach(item => {
-                centerObserver.observe(item);
-            });
+                    
+                    // For portfolio items - only one active at a time
+                    if (closestCard && closestCard.classList.contains('portfolio-item')) {
+                        document.querySelectorAll('.portfolio-item').forEach(item => {
+                            item.classList.remove('center-active');
+                        });
+                        closestCard.classList.add('center-active');
+                    } 
+                    // For other cards - activate when crossing trigger
+                    else {
+                        cards.forEach(card => {
+                            const rect = card.getBoundingClientRect();
+                            const cardTop = rect.top;
+                            
+                            if (cardTop <= triggerPoint && rect.bottom > triggerPoint) {
+                                card.classList.add('center-active');
+                            } else {
+                                card.classList.remove('center-active');
+                            }
+                        });
+                    }
+                };
+                
+                // Throttle scroll updates for performance
+                let scrollTimeout;
+                const handleScroll = () => {
+                    if (!scrollTimeout) {
+                        scrollTimeout = setTimeout(() => {
+                            updateActiveCards();
+                            scrollTimeout = null;
+                        }, 10); // 10ms throttle for smooth updates
+                    }
+                };
+                
+                window.addEventListener('scroll', handleScroll, { passive: true });
+                updateActiveCards(); // Initial check
+            }
         }
 
         // Intersection Observer for reveal animations - only on desktop
