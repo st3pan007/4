@@ -2526,28 +2526,35 @@
             color: var(--color-accent);
         }
 
-        /* Mobile Guide Line - dynamic height will be set via JS */
+        /* Mobile Guide Line - Base styles */
+        .mobile-guide-line {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            background: var(--color-border);
+            z-index: 1; /* Between background (0) and content (2) */
+            opacity: 1;
+            pointer-events: none;
+        }
+        
+        .mobile-guide-line-progress {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 0%;
+            background: var(--color-gradient-2);
+            transition: height 0.3s ease;
+        }
+
+        /* Show on mobile */
         @media (max-width: 968px) {
             .mobile-guide-line {
-                position: absolute;
-                left: 50%;
-                transform: translateX(-50%);
-                width: 2px;
-                background: var(--color-border);
-                z-index: 1;
-                opacity: 1;
-                pointer-events: none;
+                display: block;
             }
             
-            .mobile-guide-line-progress {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 0%;
-                background: var(--color-gradient-2);
-                transition: height 0.3s ease;
-            }
+            /* Headers blur shadow for better visibility */
             
             .dna-header,
             .services-header,
@@ -2645,10 +2652,11 @@
             }
         }
 
+        /* Hide on desktop */
         @media (min-width: 969px) {
             .mobile-guide-line,
             .mobile-guide-line-progress {
-                display: none;
+                display: none !important;
             }
         }
 
@@ -3676,49 +3684,47 @@
         });
 
         // Mobile Guide Line - Dynamic Height Calculation
-        if (window.innerWidth <= 968) {
-            const guideLine = document.getElementById('mobileGuideLine');
-            const mobileGuideProgress = document.getElementById('mobileGuideProgress');
-            const heroSection = document.querySelector('.hero');
-            const contactForm = document.querySelector('.contact-form form');
+        const guideLine = document.getElementById('mobileGuideLine');
+        const mobileGuideProgress = document.getElementById('mobileGuideProgress');
+        const heroSection = document.querySelector('.hero');
+        const contactForm = document.querySelector('.contact-form form');
+        
+        if (guideLine && heroSection && contactForm && window.innerWidth <= 968) {
+            // Function to update guide line height dynamically
+            const updateLineHeight = () => {
+                const startY = heroSection.offsetHeight;
+                const endY = contactForm.offsetTop + contactForm.offsetHeight / 2;
+                
+                guideLine.style.top = startY + 'px';
+                guideLine.style.height = (endY - startY) + 'px';
+            };
             
-            if (guideLine && heroSection && contactForm) {
-                // Function to update guide line height dynamically
-                const updateLineHeight = () => {
-                    const startY = heroSection.offsetHeight;
-                    const endY = contactForm.offsetTop + contactForm.offsetHeight / 2;
-                    
-                    guideLine.style.top = startY + 'px';
-                    guideLine.style.height = (endY - startY) + 'px';
-                };
+            // Update on load and resize
+            updateLineHeight();
+            window.addEventListener('resize', updateLineHeight);
+            
+            // Update progress on scroll
+            const updateGuideProgress = () => {
+                const startPoint = heroSection.offsetHeight;
+                const endPoint = contactForm.offsetTop + contactForm.offsetHeight / 2;
+                const currentScroll = window.pageYOffset + window.innerHeight / 2;
                 
-                // Update on load and resize
-                updateLineHeight();
-                window.addEventListener('resize', updateLineHeight);
-                
-                // Update progress on scroll
-                const updateGuideProgress = () => {
-                    const startPoint = heroSection.offsetHeight;
-                    const endPoint = contactForm.offsetTop + contactForm.offsetHeight / 2;
-                    const currentScroll = window.pageYOffset + window.innerHeight / 2;
-                    
-                    if (currentScroll > startPoint && currentScroll < endPoint) {
-                        let progress = ((currentScroll - startPoint) / (endPoint - startPoint)) * 100;
-                        progress = Math.min(Math.max(0, progress), 100);
-                        mobileGuideProgress.style.height = `${progress}%`;
-                    } else if (currentScroll <= startPoint) {
-                        mobileGuideProgress.style.height = '0%';
-                    } else if (currentScroll >= endPoint) {
-                        mobileGuideProgress.style.height = '100%';
-                    }
-                };
-                
-                window.addEventListener('scroll', updateGuideProgress, { passive: true });
-                updateGuideProgress(); // Initial call
-            }
+                if (currentScroll > startPoint && currentScroll < endPoint) {
+                    let progress = ((currentScroll - startPoint) / (endPoint - startPoint)) * 100;
+                    progress = Math.min(Math.max(0, progress), 100);
+                    mobileGuideProgress.style.height = `${progress}%`;
+                } else if (currentScroll <= startPoint) {
+                    mobileGuideProgress.style.height = '0%';
+                } else if (currentScroll >= endPoint) {
+                    mobileGuideProgress.style.height = '100%';
+                }
+            };
+            
+            window.addEventListener('scroll', updateGuideProgress, { passive: true });
+            updateGuideProgress(); // Initial call
         }
 
-        // Center Observer for Mobile Guide Line - stricter margins for 1-2 active cards
+        // Center Observer for Mobile Guide Line - Earlier activation
         if (window.innerWidth <= 968) {
             const centerObserver = new IntersectionObserver(
                 (entries) => {
@@ -3731,7 +3737,7 @@
                     });
                 },
                 {
-                    rootMargin: '-48% 0px -48% 0px', // Narrower margin = fewer active cards
+                    rootMargin: '-35% 0px -35% 0px', // Earlier activation
                     threshold: 0
                 }
             );
