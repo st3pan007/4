@@ -2532,10 +2532,13 @@
             left: 50%;
             transform: translateX(-50%);
             width: 2px;
-            background: var(--color-border);
+            background: var(--color-accent); /* Changed to accent color for better visibility */
             z-index: 1; /* Between background (0) and content (2) */
-            opacity: 1;
+            opacity: 0.4; /* Slightly visible */
             pointer-events: none;
+            display: block; /* Added display block */
+            height: 100vh; /* Default height as fallback */
+            top: 100vh; /* Start after hero */
         }
         
         .mobile-guide-line-progress {
@@ -3737,7 +3740,7 @@
                     });
                 },
                 {
-                    rootMargin: '-35% 0px -35% 0px', // Earlier activation
+                    rootMargin: '-25% 0px -25% 0px', // Earlier activation - 25% for better timing
                     threshold: 0
                 }
             );
