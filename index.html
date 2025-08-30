@@ -4355,7 +4355,7 @@
             });
         }
 
-        // Hover effects (desktop only) - zkrácená verze
+        // Hover effects (desktop only)
         function initHoverEffects() {
             // Service cards 3D hover
             document.querySelectorAll('.service-card').forEach(card => {
@@ -4419,6 +4419,103 @@
                     gsap.to(content, {
                         y: '100%',
                         duration: 0.5,
+                        ease: "power3.out"
+                    });
+                });
+            });
+            
+            // Social icons hover effects
+            // Floating social icons
+            document.querySelectorAll('.floating-social-link').forEach(link => {
+                link.addEventListener('mouseenter', () => {
+                    gsap.to(link, {
+                        color: 'var(--color-accent)',
+                        x: 5,
+                        scale: 1.1,
+                        duration: 0.3,
+                        ease: "power3.out"
+                    });
+                });
+                
+                link.addEventListener('mouseleave', () => {
+                    gsap.to(link, {
+                        color: 'var(--color-text)',
+                        x: 0,
+                        scale: 1,
+                        duration: 0.3,
+                        ease: "power3.out"
+                    });
+                });
+            });
+            
+            // Contact social links
+            document.querySelectorAll('.contact-social-link').forEach(link => {
+                link.addEventListener('mouseenter', () => {
+                    gsap.to(link, {
+                        backgroundColor: 'var(--color-accent)',
+                        color: 'var(--color-bg)',
+                        y: -3,
+                        rotation: 5,
+                        boxShadow: '0 5px 15px rgba(185, 104, 255, 0.3)',
+                        duration: 0.3,
+                        ease: "power3.out"
+                    });
+                });
+                
+                link.addEventListener('mouseleave', () => {
+                    gsap.to(link, {
+                        backgroundColor: 'transparent',
+                        color: 'var(--color-text)',
+                        y: 0,
+                        rotation: 0,
+                        boxShadow: 'none',
+                        duration: 0.3,
+                        ease: "power3.out"
+                    });
+                });
+            });
+            
+            // Menu contact socials
+            document.querySelectorAll('.menu-contact-social').forEach(link => {
+                link.addEventListener('mouseenter', () => {
+                    gsap.to(link, {
+                        borderColor: 'var(--color-accent)',
+                        scale: 1.1,
+                        backgroundColor: 'rgba(185, 104, 255, 0.1)',
+                        duration: 0.3,
+                        ease: "power3.out"
+                    });
+                });
+                
+                link.addEventListener('mouseleave', () => {
+                    gsap.to(link, {
+                        borderColor: 'var(--color-border)',
+                        scale: 1,
+                        backgroundColor: 'transparent',
+                        duration: 0.3,
+                        ease: "power3.out"
+                    });
+                });
+            });
+            
+            // Menu mobile socials (bottom)
+            document.querySelectorAll('.menu-social-bottom').forEach(link => {
+                link.addEventListener('mouseenter', () => {
+                    gsap.to(link, {
+                        backgroundColor: 'var(--color-accent)',
+                        color: 'var(--color-bg)',
+                        scale: 1.05,
+                        duration: 0.3,
+                        ease: "power3.out"
+                    });
+                });
+                
+                link.addEventListener('mouseleave', () => {
+                    gsap.to(link, {
+                        backgroundColor: 'var(--color-surface)',
+                        color: 'var(--color-text)',
+                        scale: 1,
+                        duration: 0.3,
                         ease: "power3.out"
                     });
                 });
@@ -4631,69 +4728,31 @@
                 }, 2000);
             });
             
-            // Form ScrollTrigger animation - DESKTOP ONLY SUBTLE VERSION
-            if (isDesktop()) {
-                ScrollTrigger.create({
-                    trigger: form,
-                    start: "top 70%",
-                    once: true,
-                    onEnter: () => {
-                        // Subtle glow on whole form
-                        gsap.to(form, {
-                            boxShadow: '0 0 40px rgba(185, 104, 255, 0.15)',
-                            duration: 1,
-                            ease: "power2.out"
-                        });
-                        
-                        // Gentle highlight on inputs
-                        const inputs = form.querySelectorAll('.form-input, .dropdown-trigger');
-                        gsap.to(inputs, {
-                            borderColor: 'rgba(185, 104, 255, 0.4)',
-                            duration: 0.8,
-                            stagger: 0.08,
-                            ease: "power2.out"
-                        });
-                        
-                        // Reset after animation
-                        gsap.to(inputs, {
-                            borderColor: 'var(--color-border)',
-                            duration: 0.6,
-                            delay: 2,
-                            ease: "power2.out"
-                        });
-                        
-                        gsap.to(form, {
-                            boxShadow: 'none',
-                            duration: 0.8,
-                            delay: 2.5,
-                            ease: "power2.out"
-                        });
-                    }
-                });
-            } else {
-                // Mobile - keep existing animation
-                ScrollTrigger.create({
-                    trigger: form,
-                    start: "top 80%",
-                    once: true,
-                    onEnter: () => {
-                        const allInputs = form.querySelectorAll('.form-input, .dropdown-trigger');
-                        gsap.to(allInputs, {
-                            borderColor: 'var(--color-accent)',
-                            duration: 0.5,
-                            stagger: 0.05,
-                            ease: "power3.out"
-                        });
-                        
-                        gsap.to(allInputs, {
-                            borderColor: 'var(--color-border)',
-                            duration: 0.5,
-                            delay: 1.5,
-                            ease: "power3.out"
-                        });
-                    }
-                });
-            }
+            // Form ScrollTrigger animation - SAME FOR DESKTOP AND MOBILE
+            ScrollTrigger.create({
+                trigger: form,
+                start: isDesktop() ? "top 70%" : "top 80%",
+                once: true,
+                onEnter: () => {
+                    const allInputs = form.querySelectorAll('.form-input, .dropdown-trigger');
+                    
+                    // Simple border highlight animation
+                    gsap.to(allInputs, {
+                        borderColor: 'var(--color-accent)',
+                        duration: 0.5,
+                        stagger: 0.05,
+                        ease: "power3.out"
+                    });
+                    
+                    // Reset borders after animation
+                    gsap.to(allInputs, {
+                        borderColor: 'var(--color-border)',
+                        duration: 0.5,
+                        delay: 1.5,
+                        ease: "power3.out"
+                    });
+                }
+            });
         }
         
         // Initialize form features after DOM loads
