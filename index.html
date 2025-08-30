@@ -21,6 +21,7 @@
     <!-- GSAP -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
     
     <style>
         /* CSS Reset & Base */
@@ -578,10 +579,11 @@
             left: 0;
             right: 0;
             padding: 2rem;
-            background: linear-gradient(180deg, transparent 0%, rgba(10, 10, 10, 0.95) 30%);
+            background: linear-gradient(180deg, transparent 0%, rgba(10, 10, 10, 0.98) 20%);
             display: none;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
+            gap: 1.5rem;
             z-index: 1000;
             opacity: 0;
             transform: translateY(20px);
@@ -589,43 +591,60 @@
 
         @media (max-width: 968px) {
             .menu-overlay.active .menu-bottom {
-                display: flex;
+                display: flex !important;
             }
         }
 
-        .menu-lang {
-            display: flex;
+        /* New language switcher design */
+        .menu-lang-switcher {
+            position: relative;
             background: var(--color-surface);
-            border-radius: 100px;
-            padding: 0.25rem;
             border: 1px solid var(--color-border);
-        }
-
-        .menu-lang-btn {
-            padding: 0.5rem 1rem;
             border-radius: 100px;
+            padding: 0.15rem;
+            display: flex;
+            width: 140px;
+        }
+        
+        .menu-lang-indicator {
+            position: absolute;
+            width: calc(33.33% - 0.1rem);
+            height: calc(100% - 0.3rem);
+            background: var(--color-accent);
+            border-radius: 100px;
+            transition: none;
+            top: 0.15rem;
+            left: 0.15rem;
+        }
+        
+        .menu-lang-btn-new {
+            flex: 1;
+            padding: 0.35rem 0.25rem;
             background: transparent;
             border: none;
             color: var(--color-text-muted);
-            font-size: 0.875rem;
+            font-size: 0.75rem;
             font-family: var(--font-body);
             font-weight: 500;
             cursor: pointer;
+            position: relative;
+            z-index: 2;
+            transition: color 0.3s ease;
         }
-
-        .menu-lang-btn.active {
-            background: var(--color-accent);
+        
+        .menu-lang-btn-new.active {
             color: var(--color-bg);
         }
-
-        .menu-social {
+        
+        /* Social icons above language */
+        .menu-socials-bottom {
             display: flex;
             gap: 1rem;
         }
-
-        .menu-social-link {
-            width: 44px;
-            height: 44px;
+        
+        .menu-social-bottom {
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             background: var(--color-surface);
             border: 1px solid var(--color-border);
@@ -739,11 +758,26 @@
             background-clip: text;
             text-fill-color: transparent;
             white-space: nowrap;
-            opacity: 0;
+            display: none;
         }
 
-        .hero-title-morph-item:first-child {
-            opacity: 1;
+        .hero-title-morph-item.active {
+            display: inline-block;
+        }
+
+        /* Blinking cursor */
+        .hero-title-cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1.2em;
+            background: var(--color-accent);
+            margin-left: 2px;
+            animation: cursorBlink 1s infinite;
+        }
+
+        @keyframes cursorBlink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
         }
 
         .hero-cta-wrapper {
@@ -1103,6 +1137,31 @@
             cursor: pointer;
             opacity: 0;
             transform: translateY(30px);
+        }
+
+        @media (max-width: 768px) {
+            .service-card {
+                padding: 1.5rem;
+            }
+            
+            .service-card--wide {
+                padding-bottom: 1.25rem;
+            }
+            
+            .service-icon {
+                font-size: 2.25rem;
+                margin-bottom: 0.75rem;
+            }
+            
+            .service-title {
+                margin-bottom: 0.5rem;
+                font-size: 1.25rem;
+            }
+            
+            .service-description {
+                font-size: 0.9rem;
+                line-height: 1.5;
+            }
         }
 
         .service-card::before {
@@ -2175,9 +2234,8 @@
             left: -1px;
             width: 4px;
             height: 0%;
-            background: linear-gradient(135deg, #5E8BFF 0%, #B968FF 100%);
+            background: linear-gradient(to bottom, #B968FF 0%, #5E8BFF 100%);
             border-radius: 2px;
-            box-shadow: 0 0 10px rgba(185, 104, 255, 0.5);
         }
 
         @media (max-width: 968px) {
@@ -2461,29 +2519,30 @@
         
         <!-- Mobile Bottom Section -->
         <div class="menu-bottom">
-            <!-- Language Switcher -->
-            <div class="menu-lang">
-                <button class="menu-lang-btn active">CZ</button>
-                <button class="menu-lang-btn">EN</button>
-                <button class="menu-lang-btn">SK</button>
-            </div>
-            
-            <!-- Social Links - pouze Instagram a WhatsApp -->
-            <div class="menu-social">
+            <!-- Social Links -->
+            <div class="menu-socials-bottom">
                 <a href="https://instagram.com/webxagency" 
-                   class="menu-social-link" 
+                   class="menu-social-bottom" 
                    target="_blank"
                    rel="noopener noreferrer"
                    aria-label="Instagram">
                     <i class="fab fa-instagram"></i>
                 </a>
                 <a href="https://wa.me/420123456789" 
-                   class="menu-social-link" 
+                   class="menu-social-bottom" 
                    target="_blank"
                    rel="noopener noreferrer"
                    aria-label="WhatsApp">
                     <i class="fab fa-whatsapp"></i>
                 </a>
+            </div>
+            
+            <!-- Language Switcher with sliding indicator -->
+            <div class="menu-lang-switcher">
+                <div class="menu-lang-indicator"></div>
+                <button class="menu-lang-btn-new active" data-lang="cz">CZ</button>
+                <button class="menu-lang-btn-new" data-lang="en">EN</button>
+                <button class="menu-lang-btn-new" data-lang="sk">SK</button>
             </div>
         </div>
     </div>
@@ -2515,9 +2574,10 @@
                     <span class="hero-title-line">
                         <span>
                             <span class="hero-title-morph" id="heroMorph">
-                                <span class="hero-title-morph-item">inovativní</span>
+                                <span class="hero-title-morph-item active">inovativní</span>
                                 <span class="hero-title-morph-item">precizní</span>
                                 <span class="hero-title-morph-item">efektivní</span>
+                                <span class="hero-title-cursor"></span>
                             </span>
                         </span>
                     </span>
@@ -3073,7 +3133,7 @@
     <!-- GSAP Scripts -->
     <script>
         // Register GSAP plugins
-        gsap.registerPlugin(ScrollTrigger);
+        gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
         // Utility functions
         const isMobile = () => window.innerWidth <= 968;
@@ -3094,6 +3154,14 @@
 
         // Initialize GSAP animations
         document.addEventListener('DOMContentLoaded', () => {
+            
+            // Configure ScrollTrigger for better performance on desktop
+            if (isDesktop()) {
+                ScrollTrigger.config({
+                    limitCallbacks: true,
+                    syncInterval: 40
+                });
+            }
             
             // Preloader animation
             const preloaderTl = gsap.timeline({
@@ -3156,6 +3224,27 @@
 
                 // Initialize scroll to top
                 initScrollToTop();
+                
+                // Language switcher functionality (PC/Tablet)
+                document.querySelectorAll('.lang-btn').forEach((btn, index) => {
+                    btn.addEventListener('click', function() {
+                        // Remove active from all
+                        document.querySelectorAll('.lang-btn').forEach(b => {
+                            b.classList.remove('active');
+                        });
+                        // Add active to clicked
+                        this.classList.add('active');
+                        
+                        // Animate button
+                        gsap.fromTo(this, {
+                            scale: 0.95
+                        }, {
+                            scale: 1,
+                            duration: 0.3,
+                            ease: "back.out(2)"
+                        });
+                    });
+                });
             }
         });
 
@@ -3179,39 +3268,81 @@
                     ease: "power3.out"
                 }, "-=0.4");
 
-            // Morphing text animation - Simple crossfade
-            const morphWords = document.querySelectorAll('.hero-title-morph-item');
+            // Morphing text animation - Typewriter effect
+            const morphWords = ['inovativní', 'precizní', 'efektivní'];
+            const morphContainer = document.getElementById('heroMorph');
+            const cursor = document.querySelector('.hero-title-cursor');
             let currentIndex = 0;
-
-            // Ensure initial state
-            morphWords.forEach((word, index) => {
-                gsap.set(word, { opacity: index === 0 ? 1 : 0 });
+            let currentWord = '';
+            let isDeleting = false;
+            let charIndex = 0;
+            
+            // Create text span for typing with explicit styles
+            const textSpan = document.createElement('span');
+            textSpan.className = 'hero-title-morph-text';
+            textSpan.style.cssText = `
+                display: inline-block;
+                background: linear-gradient(135deg, #5E8BFF 0%, #B968FF 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                font-size: inherit;
+                font-weight: inherit;
+                line-height: inherit;
+                letter-spacing: inherit;
+            `;
+            morphContainer.insertBefore(textSpan, cursor);
+            
+            // Remove original items
+            document.querySelectorAll('.hero-title-morph-item').forEach(item => {
+                item.remove();
             });
             
-            // Simple crossfade animation
-            function morphText() {
-                const current = morphWords[currentIndex];
-                const nextIndex = (currentIndex + 1) % morphWords.length;
-                const next = morphWords[nextIndex];
-
-                // Simple fade transition
-                gsap.to(current, {
-                    opacity: 0,
-                    duration: 0.5,
-                    ease: "power2.inOut"
-                });
+            // Start with first word visible
+            textSpan.textContent = morphWords[0];
+            
+            function typeWriter() {
+                const targetWord = morphWords[currentIndex];
                 
-                gsap.to(next, {
-                    opacity: 1,
-                    duration: 0.5,
-                    ease: "power2.inOut"
-                });
-
-                currentIndex = nextIndex;
+                if (!isDeleting) {
+                    // Typing
+                    currentWord = targetWord.substring(0, charIndex + 1);
+                    charIndex++;
+                    
+                    if (charIndex === targetWord.length) {
+                        // Word complete, wait then start deleting
+                        setTimeout(() => {
+                            isDeleting = true;
+                            typeWriter();
+                        }, 2500);
+                        return;
+                    }
+                } else {
+                    // Deleting
+                    currentWord = targetWord.substring(0, charIndex - 1);
+                    charIndex--;
+                    
+                    if (charIndex === 0) {
+                        // Word deleted, move to next
+                        isDeleting = false;
+                        currentIndex = (currentIndex + 1) % morphWords.length;
+                    }
+                }
+                
+                // Update text - ensure it's visible
+                textSpan.textContent = currentWord || '\u00A0'; // Non-breaking space when empty
+                
+                // Continue typing/deleting
+                const speed = isDeleting ? 40 : 150;
+                setTimeout(typeWriter, speed);
             }
-
-            // Start morphing after initial load
-            setInterval(morphText, 4000);
+            
+            // Start typing animation after initial load
+            setTimeout(() => {
+                isDeleting = true;
+                charIndex = morphWords[0].length;
+                typeWriter();
+            }, 3000);
 
             // Adjust morph container width
             function adjustMorphWidth() {
@@ -3227,14 +3358,34 @@
             adjustMorphWidth();
             window.addEventListener('resize', adjustMorphWidth);
 
-            // Button float animation
-            gsap.to('.hero-cta-wrapper .btn', {
-                y: -5,
-                duration: 3,
-                repeat: -1,
-                yoyo: true,
-                ease: "power1.inOut",
-                stagger: 0.5
+            // Button hover animations
+            document.querySelectorAll('.hero-cta-wrapper .btn').forEach((btn, index) => {
+                // Set initial floating
+                gsap.to(btn, {
+                    y: -3,
+                    duration: 2.5,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: "sine.inOut",
+                    delay: index * 0.3
+                });
+                
+                // Hover effects
+                btn.addEventListener('mouseenter', () => {
+                    gsap.to(btn, {
+                        scale: 1.05,
+                        duration: 0.3,
+                        ease: "power2.out"
+                    });
+                });
+                
+                btn.addEventListener('mouseleave', () => {
+                    gsap.to(btn, {
+                        scale: 1,
+                        duration: 0.3,
+                        ease: "power2.out"
+                    });
+                });
             });
 
             // Parallax for hero image (desktop only)
@@ -3472,6 +3623,68 @@
                 }
             });
 
+            // Form active state on scroll (desktop only)
+            if (isDesktop()) {
+                const contactForm = document.querySelector('.contact-form');
+                const formInputs = document.querySelectorAll('.form-input');
+                const formLabels = document.querySelectorAll('.form-label');
+                
+                if (contactForm) {
+                    ScrollTrigger.create({
+                        trigger: contactForm,
+                        start: "top 65%",
+                        end: "bottom 35%",
+                        onEnter: () => {
+                            // Animate all form fields at once
+                            gsap.to(formInputs, {
+                                borderColor: 'var(--color-accent)',
+                                backgroundColor: 'rgba(26, 26, 26, 0.7)',
+                                y: -2,
+                                duration: 0.4,
+                                stagger: 0.05,
+                                ease: "power3.out"
+                            });
+                            
+                            gsap.to(formLabels, {
+                                top: '-0.5rem',
+                                left: '0.5rem',
+                                fontSize: '0.875rem',
+                                color: 'var(--color-accent)',
+                                backgroundColor: 'var(--color-surface)',
+                                duration: 0.4,
+                                stagger: 0.05,
+                                ease: "power3.out"
+                            });
+                        },
+                        onLeaveBack: () => {
+                            // Reset form fields
+                            gsap.to(formInputs, {
+                                borderColor: 'var(--color-border)',
+                                backgroundColor: 'rgba(26, 26, 26, 0.5)',
+                                y: 0,
+                                duration: 0.4,
+                                ease: "power3.out"
+                            });
+                            
+                            // Reset labels for empty inputs
+                            formInputs.forEach((input, index) => {
+                                if (!input.value) {
+                                    gsap.to(formLabels[index], {
+                                        top: '1.5rem',
+                                        left: '1rem',
+                                        fontSize: '1rem',
+                                        color: 'var(--color-text-muted)',
+                                        backgroundColor: 'transparent',
+                                        duration: 0.4,
+                                        ease: "power3.out"
+                                    });
+                                }
+                            });
+                        }
+                    });
+                }
+            }
+            
             // Headers animation
             const headers = gsap.utils.toArray('.dna-header, .services-header, .portfolio-header, .process-header, .contact-header');
             
@@ -3628,13 +3841,43 @@
                     ease: "power3.out"
                 }, "-=0.2");
 
+            // Animate mobile extras and bottom - fixed structure
             if (isMobile()) {
-                menuTimeline.to('.menu-bottom', {
-                    opacity: 1,
-                    y: 0,
-                    duration: 0.3,
-                    ease: "power3.out"
-                }, "-=0.3");
+                // Add bottom elements to timeline
+                menuTimeline
+                    .to('.menu-mobile-extras', {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.4,
+                        ease: "power3.out"
+                    }, "-=0.2")
+                    .to('.menu-bottom', {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.5,
+                        ease: "back.out(1.7)"
+                    }, "-=0.2")
+                    .to('.menu-social-bottom', {
+                        scale: 1,
+                        opacity: 1,
+                        duration: 0.3,
+                        stagger: 0.1,
+                        ease: "back.out(2)"
+                    }, "-=0.3");
+                
+                // Set initial states
+                gsap.set('.menu-mobile-extras', {
+                    opacity: 0,
+                    y: 20
+                });
+                gsap.set('.menu-bottom', {
+                    opacity: 0,
+                    y: 30
+                });
+                gsap.set('.menu-social-bottom', {
+                    scale: 0.7,
+                    opacity: 0
+                });
             }
 
             // Toggle menu function
@@ -3642,8 +3885,8 @@
                 const isOpen = document.body.classList.contains('menu-open');
                 
                 if (isOpen) {
-                    // Close menu
-                    menuTimeline.reverse();
+                    // Close menu - faster reverse
+                    menuTimeline.timeScale(1.5).reverse();
                     document.body.classList.remove('menu-open');
                     
                     // Hamburger animation
@@ -3669,7 +3912,7 @@
                     }
                 } else {
                     // Open menu
-                    menuTimeline.play();
+                    menuTimeline.timeScale(1).play();
                     document.body.classList.add('menu-open');
                     
                     // Hamburger animation
@@ -3740,6 +3983,90 @@
                     });
                 });
             });
+
+            // Mobile menu extras hover effects
+            if (isMobile()) {
+                // Social icons click effect
+                document.querySelectorAll('.menu-social-bottom').forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        gsap.to(this, {
+                            scale: 0.9,
+                            duration: 0.1,
+                            yoyo: true,
+                            repeat: 1,
+                            ease: "power2.inOut"
+                        });
+                    });
+                });
+                
+                // Language switcher with sliding indicator
+                const langButtons = document.querySelectorAll('.menu-lang-btn-new');
+                const langIndicator = document.querySelector('.menu-lang-indicator');
+                
+                langButtons.forEach((btn, index) => {
+                    btn.addEventListener('click', function() {
+                        // Remove active from all
+                        langButtons.forEach(b => b.classList.remove('active'));
+                        // Add active to clicked
+                        this.classList.add('active');
+                        
+                        // Animate indicator - adjusted for smaller sizing
+                        const position = index * 33.33;
+                        gsap.to(langIndicator, {
+                            left: `calc(${position}% + 0.15rem)`,
+                            duration: 0.3,
+                            ease: "power2.inOut"
+                        });
+                        
+                        // Button click effect
+                        gsap.fromTo(this, {
+                            scale: 0.95
+                        }, {
+                            scale: 1,
+                            duration: 0.2,
+                            ease: "back.out(2)"
+                        });
+                    });
+                });
+                
+                // Initialize mobile extras state
+                gsap.set('.menu-mobile-extras', {
+                    opacity: 0,
+                    y: 20
+                });
+                
+                document.querySelectorAll('.menu-mobile-social').forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        gsap.to(this, {
+                            scale: 0.9,
+                            duration: 0.1,
+                            yoyo: true,
+                            repeat: 1,
+                            ease: "power2.inOut"
+                        });
+                    });
+                });
+                
+                document.querySelectorAll('.menu-mobile-lang-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        // Remove active from all
+                        document.querySelectorAll('.menu-mobile-lang-btn').forEach(b => {
+                            b.classList.remove('active');
+                        });
+                        // Add active to clicked
+                        this.classList.add('active');
+                        
+                        // Animate
+                        gsap.fromTo(this, {
+                            scale: 0.95
+                        }, {
+                            scale: 1,
+                            duration: 0.3,
+                            ease: "back.out(2)"
+                        });
+                    });
+                });
+            }
 
             // ESC key to close
             document.addEventListener('keydown', (e) => {
@@ -4228,37 +4555,40 @@
             scrollTopBtn.addEventListener('click', () => {
                 gsap.to(window, {
                     scrollTo: 0,
-                    duration: 1,
+                    duration: 0.8,
                     ease: "power3.inOut"
                 });
             });
             
-            // Hover effect
+            // Hover effect - elegant glow without color change
             scrollTopBtn.addEventListener('mouseenter', () => {
                 gsap.to(scrollTopBtn, {
                     scale: 1.1,
-                    rotation: 360,
-                    backgroundColor: 'var(--color-accent)',
-                    borderColor: 'var(--color-accent)',
-                    boxShadow: '0 10px 30px rgba(185, 104, 255, 0.4)',
+                    boxShadow: '0 0 20px rgba(94, 139, 255, 0.6), 0 0 40px rgba(94, 139, 255, 0.3)',
                     y: -5,
                     duration: 0.4,
                     ease: "power3.out"
                 });
                 
                 gsap.to('.scroll-top-icon', {
-                    color: 'var(--color-bg)',
                     scale: 1.2,
                     duration: 0.3
+                });
+                
+                // Pulsing glow effect
+                gsap.to(scrollTopBtn, {
+                    boxShadow: '0 0 30px rgba(94, 139, 255, 0.8), 0 0 50px rgba(94, 139, 255, 0.4)',
+                    duration: 1,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: "sine.inOut"
                 });
             });
             
             scrollTopBtn.addEventListener('mouseleave', () => {
+                gsap.killTweensOf(scrollTopBtn);
                 gsap.to(scrollTopBtn, {
                     scale: 1,
-                    rotation: 0,
-                    backgroundColor: 'var(--color-surface)',
-                    borderColor: 'var(--color-border)',
                     boxShadow: 'none',
                     y: 0,
                     duration: 0.4,
@@ -4266,7 +4596,6 @@
                 });
                 
                 gsap.to('.scroll-top-icon', {
-                    color: 'var(--color-text)',
                     scale: 1,
                     duration: 0.3
                 });
@@ -4285,7 +4614,7 @@
                             y: target,
                             offsetY: 80
                         },
-                        duration: 1,
+                        duration: 0.3,
                         ease: "power3.inOut"
                     });
                 }
