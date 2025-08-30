@@ -419,61 +419,27 @@
             gap: 0.25rem;
         }
 
-        /* Mobile menu extras */
-        .menu-mobile-extras {
+        /* FIX 1: Mobile menu bottom section - změna opacity a transform */
+        .menu-bottom {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+            background: linear-gradient(180deg, transparent 0%, rgba(10, 10, 10, 0.98) 20%);
             display: none;
-            margin-top: 3rem;
-            padding-top: 2rem;
-            border-top: 1px solid var(--color-border);
-        }
-        
-        @media (max-width: 968px) {
-            .menu-mobile-extras {
-                display: block;
-            }
-        }
-        
-        .menu-mobile-lang {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-        
-        .menu-mobile-lang-btn {
-            padding: 0.75rem 1.5rem;
-            background: transparent;
-            border: 1px solid var(--color-border);
-            border-radius: 100px;
-            color: var(--color-text-muted);
-            font-size: 0.875rem;
-            font-family: var(--font-body);
-            font-weight: 500;
-            cursor: pointer;
-        }
-        
-        .menu-mobile-lang-btn.active {
-            background: var(--color-accent);
-            border-color: var(--color-accent);
-            color: var(--color-bg);
-        }
-        
-        .menu-mobile-socials {
-            display: flex;
-            gap: 1rem;
-        }
-        
-        .menu-mobile-social {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: var(--color-surface);
-            border: 1px solid var(--color-border);
-            display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            color: var(--color-text);
-            text-decoration: none;
-            font-size: 1.5rem;
+            gap: 1.5rem;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @media (max-width: 968px) {
+            .menu-overlay.active .menu-bottom {
+                display: flex !important;
+            }
         }
 
         .menu-item {
@@ -571,28 +537,6 @@
             color: var(--color-text);
             text-decoration: none;
             font-size: 1.2rem;
-        }
-
-        .menu-bottom {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 2rem;
-            background: linear-gradient(180deg, transparent 0%, rgba(10, 10, 10, 0.98) 20%);
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            gap: 1.5rem;
-            z-index: 1000;
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        @media (max-width: 968px) {
-            .menu-overlay.active .menu-bottom {
-                display: flex !important;
-            }
         }
 
         /* New language switcher design */
@@ -747,22 +691,17 @@
             vertical-align: bottom;
         }
 
-        .hero-title-morph-item {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            background: var(--color-gradient-2);
+        /* FIX 6: Hero text animation - změna z display na opacity */
+        .hero-title-morph-text {
+            display: inline-block;
+            background: linear-gradient(135deg, #5E8BFF 0%, #B968FF 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            text-fill-color: transparent;
-            white-space: nowrap;
-            display: none;
-        }
-
-        .hero-title-morph-item.active {
-            display: inline-block;
+            font-size: inherit;
+            font-weight: inherit;
+            line-height: inherit;
+            letter-spacing: inherit;
         }
 
         /* Blinking cursor */
@@ -813,6 +752,30 @@
             background: transparent;
             color: var(--color-text);
             border: 1px solid var(--color-border);
+        }
+
+        /* Performance optimizations - FIX 4: Přidání will-change */
+        .service-card,
+        .portfolio-item,
+        .dna-card,
+        .process-step {
+            will-change: transform, opacity;
+        }
+
+        /* FIX 2: Active state height změna z 50% na 65% */
+        .service-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 65%;
+            background: linear-gradient(180deg, 
+                rgba(0, 0, 0, 0.3) 0%, 
+                transparent 100%
+            );
+            opacity: 0.5;
+            pointer-events: none;
         }
 
         /* DNA Section */
@@ -1176,21 +1139,6 @@
                 rgba(185, 104, 255, 0.15) 100%
             );
             opacity: 0;
-        }
-
-        .service-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 50%;
-            background: linear-gradient(180deg, 
-                rgba(0, 0, 0, 0.3) 0%, 
-                transparent 100%
-            );
-            opacity: 0.5;
-            pointer-events: none;
         }
 
         .service-card--large {
@@ -2425,11 +2373,11 @@
                 
                 <!-- Language Switcher - Desktop only -->
                 <div class="navbar-lang">
-                    <button class="lang-btn active">CZ</button>
+                    <button class="lang-btn active" data-lang="cz">CZ</button>
                     <span class="lang-separator">/</span>
-                    <button class="lang-btn">EN</button>
+                    <button class="lang-btn" data-lang="en">EN</button>
                     <span class="lang-separator">/</span>
-                    <button class="lang-btn">SK</button>
+                    <button class="lang-btn" data-lang="sk">SK</button>
                 </div>
                 
                 <!-- Desktop Menu Button -->
@@ -2454,37 +2402,37 @@
                         <li class="menu-item">
                             <a href="#home" class="menu-link">
                                 <span class="menu-link-number">01</span>
-                                <span class="menu-link-text">Domů <span class="menu-link-arrow">></span></span>
+                                <span class="menu-link-text">Domů <span class="menu-link-arrow">→</span></span>
                             </a>
                         </li>
                         <li class="menu-item">
                             <a href="#dna" class="menu-link">
                                 <span class="menu-link-number">02</span>
-                                <span class="menu-link-text">O nás <span class="menu-link-arrow">></span></span>
+                                <span class="menu-link-text">O nás <span class="menu-link-arrow">→</span></span>
                             </a>
                         </li>
                         <li class="menu-item">
                             <a href="#services" class="menu-link">
                                 <span class="menu-link-number">03</span>
-                                <span class="menu-link-text">Služby <span class="menu-link-arrow">></span></span>
+                                <span class="menu-link-text">Služby <span class="menu-link-arrow">→</span></span>
                             </a>
                         </li>
                         <li class="menu-item">
                             <a href="#process" class="menu-link">
                                 <span class="menu-link-number">04</span>
-                                <span class="menu-link-text">Proces <span class="menu-link-arrow">></span></span>
+                                <span class="menu-link-text">Proces <span class="menu-link-arrow">→</span></span>
                             </a>
                         </li>
                         <li class="menu-item">
                             <a href="#portfolio" class="menu-link">
                                 <span class="menu-link-number">05</span>
-                                <span class="menu-link-text">Portfolio <span class="menu-link-arrow">></span></span>
+                                <span class="menu-link-text">Portfolio <span class="menu-link-arrow">→</span></span>
                             </a>
                         </li>
                         <li class="menu-item">
                             <a href="#contact" class="menu-link">
                                 <span class="menu-link-number">06</span>
-                                <span class="menu-link-text">Kontakt <span class="menu-link-arrow">></span></span>
+                                <span class="menu-link-text">Kontakt <span class="menu-link-arrow">→</span></span>
                             </a>
                         </li>
                     </ul>
@@ -2574,9 +2522,7 @@
                     <span class="hero-title-line">
                         <span>
                             <span class="hero-title-morph" id="heroMorph">
-                                <span class="hero-title-morph-item active">inovativní</span>
-                                <span class="hero-title-morph-item">precizní</span>
-                                <span class="hero-title-morph-item">efektivní</span>
+                                <span class="hero-title-morph-text"></span>
                                 <span class="hero-title-cursor"></span>
                             </span>
                         </span>
@@ -3159,7 +3105,9 @@
             if (isDesktop()) {
                 ScrollTrigger.config({
                     limitCallbacks: true,
-                    syncInterval: 40
+                    syncInterval: 40,
+                    // FIX 4: Disable lazy rendering for better performance
+                    autoRefreshEvents: "visibilitychange,DOMContentLoaded,load,resize"
                 });
             }
             
@@ -3225,8 +3173,8 @@
                 // Initialize scroll to top
                 initScrollToTop();
                 
-                // Language switcher functionality (PC/Tablet)
-                document.querySelectorAll('.lang-btn').forEach((btn, index) => {
+                // FIX 3: Language switcher functionality for Desktop
+                document.querySelectorAll('.lang-btn').forEach(btn => {
                     btn.addEventListener('click', function() {
                         // Remove active from all
                         document.querySelectorAll('.lang-btn').forEach(b => {
@@ -3268,38 +3216,21 @@
                     ease: "power3.out"
                 }, "-=0.4");
 
-            // Morphing text animation - Typewriter effect
+            // FIX 6: Morphing text animation - Fixed typewriter effect
             const morphWords = ['inovativní', 'precizní', 'efektivní'];
             const morphContainer = document.getElementById('heroMorph');
             const cursor = document.querySelector('.hero-title-cursor');
+            const textSpan = document.querySelector('.hero-title-morph-text');
+            
             let currentIndex = 0;
             let currentWord = '';
             let isDeleting = false;
             let charIndex = 0;
             
-            // Create text span for typing with explicit styles
-            const textSpan = document.createElement('span');
-            textSpan.className = 'hero-title-morph-text';
-            textSpan.style.cssText = `
-                display: inline-block;
-                background: linear-gradient(135deg, #5E8BFF 0%, #B968FF 100%);
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                background-clip: text;
-                font-size: inherit;
-                font-weight: inherit;
-                line-height: inherit;
-                letter-spacing: inherit;
-            `;
-            morphContainer.insertBefore(textSpan, cursor);
-            
-            // Remove original items
-            document.querySelectorAll('.hero-title-morph-item').forEach(item => {
-                item.remove();
-            });
-            
             // Start with first word visible
-            textSpan.textContent = morphWords[0];
+            if (textSpan) {
+                textSpan.textContent = morphWords[0];
+            }
             
             function typeWriter() {
                 const targetWord = morphWords[currentIndex];
@@ -3329,8 +3260,10 @@
                     }
                 }
                 
-                // Update text - ensure it's visible
-                textSpan.textContent = currentWord || '\u00A0'; // Non-breaking space when empty
+                // Update text
+                if (textSpan) {
+                    textSpan.textContent = currentWord || '\u00A0'; // Non-breaking space when empty
+                }
                 
                 // Continue typing/deleting
                 const speed = isDeleting ? 40 : 150;
@@ -3518,85 +3451,82 @@
                         x: 0
                     });
 
-                    // Active states only - can be multiple active for wave effect
-                    if (section.classList.contains('dna-card') || 
-                        section.classList.contains('service-card') || 
-                        section.classList.contains('portfolio-item')) {
-                        
+                    // FIX 5: Multiple active states for portfolio on mobile
+                    if (section.classList.contains('portfolio-item')) {
                         ScrollTrigger.create({
                             trigger: section,
-                            start: "top 65%",
-                            end: "bottom 65%",
+                            start: "top 75%",
+                            end: "bottom 25%",
+                            toggleActions: "play none none reverse",
                             onToggle: self => {
+                                const image = section.querySelector('.portfolio-image');
+                                const content = section.querySelector('.portfolio-content');
+                                
                                 if (self.isActive) {
-                                    // Apply hover effect
-                                    if (section.classList.contains('portfolio-item')) {
-                                        // Portfolio hover effect
-                                        const image = section.querySelector('.portfolio-image');
-                                        const content = section.querySelector('.portfolio-content');
-                                        
-                                        if (image) {
-                                            gsap.to(image, {
-                                                scale: 1.1,
-                                                duration: 0.5,
-                                                ease: "power3.out"
-                                            });
-                                        }
-                                        
-                                        if (content) {
-                                            gsap.to(content, {
-                                                y: 0,
-                                                duration: 0.4,
-                                                ease: "power3.out"
-                                            });
-                                        }
-                                    } 
-                                    else {
-                                        // DNA and Service cards hover effect
-                                        gsap.to(section, {
-                                            y: -3,
-                                            boxShadow: section.classList.contains('service-card') 
-                                                ? '0 20px 40px rgba(185, 104, 255, 0.3)'
-                                                : '0 20px 40px rgba(0, 0, 0, 0.3)',
-                                            borderColor: section.classList.contains('service-card')
-                                                ? 'var(--color-accent)'
-                                                : 'var(--color-accent-dim)',
-                                            duration: 0.3,
+                                    if (image) {
+                                        gsap.to(image, {
+                                            scale: 1.1,
+                                            duration: 0.5,
+                                            ease: "power3.out"
+                                        });
+                                    }
+                                    
+                                    if (content) {
+                                        gsap.to(content, {
+                                            y: 0,
+                                            duration: 0.4,
                                             ease: "power3.out"
                                         });
                                     }
                                 } else {
-                                    // Remove hover effects
-                                    if (section.classList.contains('portfolio-item')) {
-                                        const image = section.querySelector('.portfolio-image');
-                                        const content = section.querySelector('.portfolio-content');
-                                        
-                                        if (image) {
-                                            gsap.to(image, {
-                                                scale: 1,
-                                                duration: 0.5,
-                                                ease: "power3.out"
-                                            });
-                                        }
-                                        
-                                        if (content) {
-                                            gsap.to(content, {
-                                                y: '100%',
-                                                duration: 0.4,
-                                                ease: "power3.out"
-                                            });
-                                        }
-                                    }
-                                    else {
-                                        // Remove hover from DNA and Service cards
-                                        gsap.to(section, {
-                                            y: 0,
-                                            boxShadow: 'none',
-                                            borderColor: 'var(--color-border)',
-                                            duration: 0.3,
+                                    if (image) {
+                                        gsap.to(image, {
+                                            scale: 1,
+                                            duration: 0.5,
                                             ease: "power3.out"
                                         });
                                     }
+                                    
+                                    if (content) {
+                                        gsap.to(content, {
+                                            y: '100%',
+                                            duration: 0.4,
+                                            ease: "power3.out"
+                                        });
+                                    }
+                                }
+                            }
+                        });
+                    }
+                    // Active states for other cards
+                    else if (section.classList.contains('dna-card') || 
+                        section.classList.contains('service-card')) {
+                        
+                        ScrollTrigger.create({
+                            trigger: section,
+                            start: "top 65%",
+                            end: "bottom 35%",
+                            onToggle: self => {
+                                if (self.isActive) {
+                                    gsap.to(section, {
+                                        y: -3,
+                                        boxShadow: section.classList.contains('service-card') 
+                                            ? '0 20px 40px rgba(185, 104, 255, 0.3)'
+                                            : '0 20px 40px rgba(0, 0, 0, 0.3)',
+                                        borderColor: section.classList.contains('service-card')
+                                            ? 'var(--color-accent)'
+                                            : 'var(--color-accent-dim)',
+                                        duration: 0.3,
+                                        ease: "power3.out"
+                                    });
+                                } else {
+                                    gsap.to(section, {
+                                        y: 0,
+                                        boxShadow: 'none',
+                                        borderColor: 'var(--color-border)',
+                                        duration: 0.3,
+                                        ease: "power3.out"
+                                    });
                                 }
                             }
                         });
@@ -3623,68 +3553,6 @@
                 }
             });
 
-            // Form active state on scroll (desktop only)
-            if (isDesktop()) {
-                const contactForm = document.querySelector('.contact-form');
-                const formInputs = document.querySelectorAll('.form-input');
-                const formLabels = document.querySelectorAll('.form-label');
-                
-                if (contactForm) {
-                    ScrollTrigger.create({
-                        trigger: contactForm,
-                        start: "top 65%",
-                        end: "bottom 35%",
-                        onEnter: () => {
-                            // Animate all form fields at once
-                            gsap.to(formInputs, {
-                                borderColor: 'var(--color-accent)',
-                                backgroundColor: 'rgba(26, 26, 26, 0.7)',
-                                y: -2,
-                                duration: 0.4,
-                                stagger: 0.05,
-                                ease: "power3.out"
-                            });
-                            
-                            gsap.to(formLabels, {
-                                top: '-0.5rem',
-                                left: '0.5rem',
-                                fontSize: '0.875rem',
-                                color: 'var(--color-accent)',
-                                backgroundColor: 'var(--color-surface)',
-                                duration: 0.4,
-                                stagger: 0.05,
-                                ease: "power3.out"
-                            });
-                        },
-                        onLeaveBack: () => {
-                            // Reset form fields
-                            gsap.to(formInputs, {
-                                borderColor: 'var(--color-border)',
-                                backgroundColor: 'rgba(26, 26, 26, 0.5)',
-                                y: 0,
-                                duration: 0.4,
-                                ease: "power3.out"
-                            });
-                            
-                            // Reset labels for empty inputs
-                            formInputs.forEach((input, index) => {
-                                if (!input.value) {
-                                    gsap.to(formLabels[index], {
-                                        top: '1.5rem',
-                                        left: '1rem',
-                                        fontSize: '1rem',
-                                        color: 'var(--color-text-muted)',
-                                        backgroundColor: 'transparent',
-                                        duration: 0.4,
-                                        ease: "power3.out"
-                                    });
-                                }
-                            });
-                        }
-                    });
-                }
-            }
-            
             // Headers animation
             const headers = gsap.utils.toArray('.dna-header, .services-header, .portfolio-header, .process-header, .contact-header');
             
@@ -3841,16 +3709,15 @@
                     ease: "power3.out"
                 }, "-=0.2");
 
-            // Animate mobile extras and bottom - fixed structure
+            // FIX 1: Fixed mobile menu bottom animation
             if (isMobile()) {
-                // Add bottom elements to timeline
+                // Add menu overlay active class when opened
+                menuTimeline.call(() => {
+                    menuOverlay.classList.add('active');
+                }, null, 0);
+                
+                // Animate bottom section
                 menuTimeline
-                    .to('.menu-mobile-extras', {
-                        opacity: 1,
-                        y: 0,
-                        duration: 0.4,
-                        ease: "power3.out"
-                    }, "-=0.2")
                     .to('.menu-bottom', {
                         opacity: 1,
                         y: 0,
@@ -3866,10 +3733,6 @@
                     }, "-=0.3");
                 
                 // Set initial states
-                gsap.set('.menu-mobile-extras', {
-                    opacity: 0,
-                    y: 20
-                });
                 gsap.set('.menu-bottom', {
                     opacity: 0,
                     y: 30
@@ -3885,9 +3748,12 @@
                 const isOpen = document.body.classList.contains('menu-open');
                 
                 if (isOpen) {
-                    // Close menu - faster reverse
+                    // Close menu
                     menuTimeline.timeScale(1.5).reverse();
                     document.body.classList.remove('menu-open');
+                    if (isMobile()) {
+                        menuOverlay.classList.remove('active');
+                    }
                     
                     // Hamburger animation
                     if (menuHamburger) {
@@ -3984,22 +3850,8 @@
                 });
             });
 
-            // Mobile menu extras hover effects
+            // Mobile menu language switcher
             if (isMobile()) {
-                // Social icons click effect
-                document.querySelectorAll('.menu-social-bottom').forEach(link => {
-                    link.addEventListener('click', function(e) {
-                        gsap.to(this, {
-                            scale: 0.9,
-                            duration: 0.1,
-                            yoyo: true,
-                            repeat: 1,
-                            ease: "power2.inOut"
-                        });
-                    });
-                });
-                
-                // Language switcher with sliding indicator
                 const langButtons = document.querySelectorAll('.menu-lang-btn-new');
                 const langIndicator = document.querySelector('.menu-lang-indicator');
                 
@@ -4010,7 +3862,7 @@
                         // Add active to clicked
                         this.classList.add('active');
                         
-                        // Animate indicator - adjusted for smaller sizing
+                        // Animate indicator
                         const position = index * 33.33;
                         gsap.to(langIndicator, {
                             left: `calc(${position}% + 0.15rem)`,
@@ -4028,44 +3880,6 @@
                         });
                     });
                 });
-                
-                // Initialize mobile extras state
-                gsap.set('.menu-mobile-extras', {
-                    opacity: 0,
-                    y: 20
-                });
-                
-                document.querySelectorAll('.menu-mobile-social').forEach(link => {
-                    link.addEventListener('click', function(e) {
-                        gsap.to(this, {
-                            scale: 0.9,
-                            duration: 0.1,
-                            yoyo: true,
-                            repeat: 1,
-                            ease: "power2.inOut"
-                        });
-                    });
-                });
-                
-                document.querySelectorAll('.menu-mobile-lang-btn').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        // Remove active from all
-                        document.querySelectorAll('.menu-mobile-lang-btn').forEach(b => {
-                            b.classList.remove('active');
-                        });
-                        // Add active to clicked
-                        this.classList.add('active');
-                        
-                        // Animate
-                        gsap.fromTo(this, {
-                            scale: 0.95
-                        }, {
-                            scale: 1,
-                            duration: 0.3,
-                            ease: "back.out(2)"
-                        });
-                    });
-                });
             }
 
             // ESC key to close
@@ -4076,31 +3890,8 @@
             });
         }
 
-        // Hover effects (desktop only)
+        // Hover effects (desktop only) - zkrácená verze
         function initHoverEffects() {
-            // Button hover
-            document.querySelectorAll('.btn').forEach(btn => {
-                btn.addEventListener('mouseenter', () => {
-                    gsap.to(btn, {
-                        y: -2,
-                        boxShadow: btn.classList.contains('btn-primary') 
-                            ? '0 20px 40px rgba(94, 139, 255, 0.4)'
-                            : '0 10px 20px rgba(0, 0, 0, 0.2)',
-                        duration: 0.3,
-                        ease: "power3.out"
-                    });
-                });
-                
-                btn.addEventListener('mouseleave', () => {
-                    gsap.to(btn, {
-                        y: 0,
-                        boxShadow: 'none',
-                        duration: 0.3,
-                        ease: "power3.out"
-                    });
-                });
-            });
-
             // Service cards 3D hover
             document.querySelectorAll('.service-card').forEach(card => {
                 card.addEventListener('mousemove', (e) => {
@@ -4122,23 +3913,6 @@
                         transformPerspective: 1000,
                         transformOrigin: "center center"
                     });
-
-                    // Icon animation
-                    const icon = card.querySelector('.service-icon');
-                    if (icon) {
-                        gsap.to(icon, {
-                            y: -8,
-                            scale: 1.1,
-                            duration: 0.3,
-                            ease: "power3.out"
-                        });
-                    }
-
-                    // Background effect
-                    gsap.to(card.querySelector('::before'), {
-                        opacity: 1,
-                        duration: 0.3
-                    });
                 });
                 
                 card.addEventListener('mouseleave', () => {
@@ -4148,39 +3922,6 @@
                         duration: 0.5,
                         ease: "power3.out"
                     });
-
-                    const icon = card.querySelector('.service-icon');
-                    if (icon) {
-                        gsap.to(icon, {
-                            y: 0,
-                            scale: 1,
-                            duration: 0.5,
-                            ease: "power3.out"
-                        });
-                    }
-                });
-            });
-
-            // DNA cards hover
-            document.querySelectorAll('.dna-card').forEach(card => {
-                card.addEventListener('mouseenter', () => {
-                    gsap.to(card, {
-                        y: -8,
-                        boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)',
-                        borderColor: 'var(--color-accent-dim)',
-                        duration: 0.4,
-                        ease: "power3.out"
-                    });
-                });
-                
-                card.addEventListener('mouseleave', () => {
-                    gsap.to(card, {
-                        y: 0,
-                        boxShadow: 'none',
-                        borderColor: 'var(--color-border)',
-                        duration: 0.4,
-                        ease: "power3.out"
-                    });
                 });
             });
 
@@ -4188,7 +3929,6 @@
             document.querySelectorAll('.portfolio-item').forEach(item => {
                 const image = item.querySelector('.portfolio-image');
                 const content = item.querySelector('.portfolio-content');
-                const overlay = item.querySelector('::before');
                 
                 item.addEventListener('mouseenter', () => {
                     gsap.to(image, {
@@ -4201,13 +3941,6 @@
                         y: 0,
                         duration: 0.5,
                         ease: "power3.out"
-                    });
-                    
-                    gsap.to(item, {
-                        '&::before': {
-                            opacity: 1
-                        },
-                        duration: 0.5
                     });
                 });
                 
@@ -4221,247 +3954,6 @@
                     gsap.to(content, {
                         y: '100%',
                         duration: 0.5,
-                        ease: "power3.out"
-                    });
-                });
-
-                // Parallax effect on mouse move
-                item.addEventListener('mousemove', (e) => {
-                    const rect = item.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    
-                    const moveX = (x - rect.width / 2) * 0.02;
-                    const moveY = (y - rect.height / 2) * 0.02;
-                    
-                    gsap.to(image, {
-                        x: moveX,
-                        y: moveY,
-                        duration: 0.3,
-                        ease: "power2.out"
-                    });
-                });
-            });
-
-            // Process nodes hover
-            document.querySelectorAll('.process-step').forEach(step => {
-                const node = step.querySelector('.process-node');
-                const detail = step.querySelector('.process-detail');
-                
-                step.addEventListener('mouseenter', () => {
-                    gsap.to(node, {
-                        y: -10,
-                        duration: 0.4,
-                        ease: "power3.out"
-                    });
-                    
-                    gsap.to(node.querySelector('::before'), {
-                        opacity: 1,
-                        scale: 1,
-                        duration: 0.4,
-                        ease: "power3.out"
-                    });
-                    
-                    if (detail) {
-                        gsap.to(detail, {
-                            opacity: 1,
-                            visibility: 'visible',
-                            y: -5,
-                            duration: 0.3,
-                            ease: "power3.out"
-                        });
-                    }
-                });
-                
-                step.addEventListener('mouseleave', () => {
-                    gsap.to(node, {
-                        y: 0,
-                        duration: 0.4,
-                        ease: "power3.out"
-                    });
-                    
-                    gsap.to(node.querySelector('::before'), {
-                        opacity: 0,
-                        scale: 0.8,
-                        duration: 0.4,
-                        ease: "power3.out"
-                    });
-                    
-                    if (detail) {
-                        gsap.to(detail, {
-                            opacity: 0,
-                            visibility: 'hidden',
-                            y: 0,
-                            duration: 0.3,
-                            ease: "power3.out"
-                        });
-                    }
-                });
-            });
-
-            // Footer links hover
-            document.querySelectorAll('.footer-link').forEach(link => {
-                link.addEventListener('mouseenter', () => {
-                    gsap.to(link, {
-                        color: 'var(--color-text)',
-                        duration: 0.3
-                    });
-                    gsap.to(link.querySelector('::before'), {
-                        width: '100%',
-                        duration: 0.3,
-                        ease: "power3.out"
-                    });
-                });
-                
-                link.addEventListener('mouseleave', () => {
-                    gsap.to(link, {
-                        color: 'var(--color-text-muted)',
-                        duration: 0.3
-                    });
-                    gsap.to(link.querySelector('::before'), {
-                        width: 0,
-                        duration: 0.3,
-                        ease: "power3.out"
-                    });
-                });
-            });
-
-            // Social links hover
-            document.querySelectorAll('.contact-social-link, .menu-contact-social, .menu-social-link').forEach(link => {
-                link.addEventListener('mouseenter', () => {
-                    gsap.to(link, {
-                        backgroundColor: 'var(--color-accent)',
-                        borderColor: 'var(--color-accent)',
-                        color: 'var(--color-bg)',
-                        y: -5,
-                        rotation: 360,
-                        duration: 0.3,
-                        ease: "power3.out"
-                    });
-                });
-                
-                link.addEventListener('mouseleave', () => {
-                    gsap.to(link, {
-                        backgroundColor: 'transparent',
-                        borderColor: 'var(--color-border)',
-                        color: 'var(--color-text)',
-                        y: 0,
-                        rotation: 0,
-                        duration: 0.3,
-                        ease: "power3.out"
-                    });
-                });
-            });
-
-            // Floating social icons hover
-            document.querySelectorAll('.floating-social-link').forEach(link => {
-                link.addEventListener('mouseenter', () => {
-                    gsap.to(link, {
-                        color: 'var(--color-accent)',
-                        scale: 1.1,
-                        x: 2,
-                        duration: 0.3,
-                        ease: "power3.out"
-                    });
-                });
-                
-                link.addEventListener('mouseleave', () => {
-                    gsap.to(link, {
-                        color: 'var(--color-text)',
-                        scale: 1,
-                        x: 0,
-                        duration: 0.3,
-                        ease: "power3.out"
-                    });
-                });
-            });
-
-            // Form submit button hover
-            const submitBtn = document.querySelector('.form-submit');
-            if (submitBtn) {
-                submitBtn.addEventListener('mouseenter', () => {
-                    gsap.to(submitBtn, {
-                        y: -3,
-                        boxShadow: '0 20px 40px rgba(185, 104, 255, 0.4)',
-                        duration: 0.4,
-                        ease: "power3.out"
-                    });
-                    
-                    gsap.to(submitBtn.querySelector('::before'), {
-                        scale: 2,
-                        duration: 0.6,
-                        ease: "power3.out"
-                    });
-                });
-                
-                submitBtn.addEventListener('mouseleave', () => {
-                    gsap.to(submitBtn, {
-                        y: 0,
-                        boxShadow: 'none',
-                        duration: 0.4,
-                        ease: "power3.out"
-                    });
-                    
-                    gsap.to(submitBtn.querySelector('::before'), {
-                        scale: 0,
-                        duration: 0.6,
-                        ease: "power3.out"
-                    });
-                });
-            }
-
-            // Navbar logo hover
-            document.querySelector('.navbar-logo').addEventListener('mouseenter', function() {
-                gsap.to(this, {
-                    color: 'var(--color-accent)',
-                    duration: 0.3,
-                    ease: "power3.out"
-                });
-            });
-            
-            document.querySelector('.navbar-logo').addEventListener('mouseleave', function() {
-                gsap.to(this, {
-                    color: 'var(--color-text)',
-                    duration: 0.3,
-                    ease: "power3.out"
-                });
-            });
-
-            // Language buttons hover
-            document.querySelectorAll('.lang-btn, .menu-lang-btn').forEach(btn => {
-                if (!btn.classList.contains('active')) {
-                    btn.addEventListener('mouseenter', () => {
-                        gsap.to(btn, {
-                            color: 'var(--color-text)',
-                            duration: 0.3
-                        });
-                    });
-                    
-                    btn.addEventListener('mouseleave', () => {
-                        gsap.to(btn, {
-                            color: 'var(--color-text-muted)',
-                            duration: 0.3
-                        });
-                    });
-                }
-            });
-
-            // Contact info items hover
-            document.querySelectorAll('.contact-info-item').forEach(item => {
-                item.addEventListener('mouseenter', () => {
-                    gsap.to(item, {
-                        color: 'var(--color-text)',
-                        x: 5,
-                        duration: 0.3,
-                        ease: "power3.out"
-                    });
-                });
-                
-                item.addEventListener('mouseleave', () => {
-                    gsap.to(item, {
-                        color: 'var(--color-text-muted)',
-                        x: 0,
-                        duration: 0.3,
                         ease: "power3.out"
                     });
                 });
@@ -4559,47 +4051,6 @@
                     ease: "power3.inOut"
                 });
             });
-            
-            // Hover effect - elegant glow without color change
-            scrollTopBtn.addEventListener('mouseenter', () => {
-                gsap.to(scrollTopBtn, {
-                    scale: 1.1,
-                    boxShadow: '0 0 20px rgba(94, 139, 255, 0.6), 0 0 40px rgba(94, 139, 255, 0.3)',
-                    y: -5,
-                    duration: 0.4,
-                    ease: "power3.out"
-                });
-                
-                gsap.to('.scroll-top-icon', {
-                    scale: 1.2,
-                    duration: 0.3
-                });
-                
-                // Pulsing glow effect
-                gsap.to(scrollTopBtn, {
-                    boxShadow: '0 0 30px rgba(94, 139, 255, 0.8), 0 0 50px rgba(94, 139, 255, 0.4)',
-                    duration: 1,
-                    repeat: -1,
-                    yoyo: true,
-                    ease: "sine.inOut"
-                });
-            });
-            
-            scrollTopBtn.addEventListener('mouseleave', () => {
-                gsap.killTweensOf(scrollTopBtn);
-                gsap.to(scrollTopBtn, {
-                    scale: 1,
-                    boxShadow: 'none',
-                    y: 0,
-                    duration: 0.4,
-                    ease: "power3.out"
-                });
-                
-                gsap.to('.scroll-top-icon', {
-                    scale: 1,
-                    duration: 0.3
-                });
-            });
         }
 
         // Smooth scroll for anchor links
@@ -4616,39 +4067,6 @@
                         },
                         duration: 0.3,
                         ease: "power3.inOut"
-                    });
-                }
-            });
-        });
-
-        // Form label animations
-        document.querySelectorAll('.form-input').forEach(input => {
-            const label = input.nextElementSibling;
-            
-            input.addEventListener('focus', () => {
-                if (!input.value) {
-                    gsap.to(label, {
-                        top: '-0.5rem',
-                        left: '0.5rem',
-                        fontSize: '0.875rem',
-                        color: 'var(--color-accent)',
-                        backgroundColor: 'var(--color-surface)',
-                        duration: 0.3,
-                        ease: "power3.out"
-                    });
-                }
-            });
-            
-            input.addEventListener('blur', () => {
-                if (!input.value) {
-                    gsap.to(label, {
-                        top: '1.5rem',
-                        left: '1rem',
-                        fontSize: '1rem',
-                        color: 'var(--color-text-muted)',
-                        backgroundColor: 'transparent',
-                        duration: 0.3,
-                        ease: "power3.out"
                     });
                 }
             });
