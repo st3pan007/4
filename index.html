@@ -687,12 +687,16 @@
         .hero-title-morph {
             display: inline-block;
             position: relative;
+            min-width: 280px;
             height: 1.2em;
             vertical-align: bottom;
         }
 
-        /* FIX 6: Hero text animation - změna z display na opacity */
+        /* FIX 6: Hero text animation */
         .hero-title-morph-text {
+            position: absolute;
+            left: 0;
+            top: 0;
             display: inline-block;
             background: linear-gradient(135deg, #5E8BFF 0%, #B968FF 100%);
             -webkit-background-clip: text;
@@ -700,17 +704,21 @@
             background-clip: text;
             font-size: inherit;
             font-weight: inherit;
-            line-height: inherit;
+            line-height: 1.2;
             letter-spacing: inherit;
+            white-space: nowrap;
         }
 
-        /* Blinking cursor */
-        .hero-title-cursor {
-            display: inline-block;
+        /* Blinking cursor as pseudo-element */
+        .hero-title-morph-text::after {
+            content: '';
+            position: absolute;
+            right: -8px;
+            top: 50%;
+            transform: translateY(-50%);
             width: 3px;
-            height: 1.2em;
+            height: 0.8em;
             background: var(--color-accent);
-            margin-left: 2px;
             animation: cursorBlink 1s infinite;
         }
 
@@ -1847,6 +1855,15 @@
             pointer-events: none;
             background: transparent;
             padding: 0 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-label-static {
+            display: block;
+            color: var(--color-text);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
         }
 
         .form-input:focus + .form-label,
@@ -1856,6 +1873,197 @@
             font-size: 0.875rem;
             color: var(--color-accent);
             background: var(--color-surface);
+        }
+
+        /* Form helpers */
+        .form-helper {
+            display: block;
+            font-size: 0.875rem;
+            color: var(--color-text-dim);
+            margin-top: 0.5rem;
+            opacity: 0;
+            transform: translateY(-5px);
+            transition: all 0.3s ease;
+        }
+
+        .form-group:focus-within .form-helper {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Checkboxes styling */
+        .form-checkboxes {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.25rem;
+            background: rgba(26, 26, 26, 0.3);
+            border: 2px solid var(--color-border);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .checkbox-item:hover {
+            background: rgba(26, 26, 26, 0.5);
+            border-color: var(--color-accent-dim);
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .checkbox-box {
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--color-border);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .checkbox-box i {
+            font-size: 0.75rem;
+            color: var(--color-bg);
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.3s ease;
+        }
+
+        .checkbox-item input[type="checkbox"]:checked ~ .checkbox-box {
+            background: var(--color-gradient-2);
+            border-color: transparent;
+        }
+
+        .checkbox-item input[type="checkbox"]:checked ~ .checkbox-box i {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .checkbox-text {
+            font-size: 0.95rem;
+            color: var(--color-text);
+            line-height: 1.4;
+        }
+
+        /* Form status messages */
+        .form-status {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 8px;
+            display: none;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .form-status.success {
+            background: rgba(74, 222, 128, 0.1);
+            border: 1px solid rgba(74, 222, 128, 0.3);
+            color: var(--color-success);
+            display: flex;
+        }
+
+        .form-status.error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+            display: flex;
+        }
+
+        /* Submit button states */
+        .submit-text,
+        .submit-loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .form-submit.loading .submit-text {
+            display: none;
+        }
+
+        .form-submit.loading .submit-loading {
+            display: flex !important;
+        }
+
+        /* WhatsApp alternative */
+        .contact-quick {
+            margin-top: 3rem;
+            padding-top: 2.5rem;
+            border-top: 1px solid var(--color-border);
+            text-align: center;
+        }
+
+        .quick-title {
+            font-size: 1rem;
+            color: var(--color-text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .whatsapp-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 100px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+        }
+
+        .whatsapp-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.4);
+        }
+
+        .whatsapp-button i {
+            font-size: 1.5rem;
+        }
+
+        .whatsapp-text {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+        }
+
+        .whatsapp-text strong {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .whatsapp-text small {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 968px) {
+            .contact-info {
+                min-height: auto;
+            }
+            
+            .form-checkboxes {
+                gap: 0.5rem;
+            }
+            
+            .checkbox-item {
+                padding: 0.875rem 1rem;
+            }
         }
 
         .form-textarea {
@@ -2523,7 +2731,6 @@
                         <span>
                             <span class="hero-title-morph" id="heroMorph">
                                 <span class="hero-title-morph-text"></span>
-                                <span class="hero-title-cursor"></span>
                             </span>
                         </span>
                     </span>
@@ -2893,7 +3100,7 @@
                 <div class="contact-content">
                     <!-- Contact Form -->
                     <div class="contact-form">
-                        <form action="#" method="POST">
+                        <form action="#" method="POST" id="contactForm">
                             <div class="form-group">
                                 <input type="text" class="form-input" id="name" placeholder=" " required>
                                 <label for="name" class="form-label">Vaše jméno</label>
@@ -2902,22 +3109,84 @@
                             <div class="form-group">
                                 <input type="email" class="form-input" id="email" placeholder=" " required>
                                 <label for="email" class="form-label">Email</label>
+                                <small class="form-helper">Používejte email, který pravidelně kontrolujete</small>
                             </div>
                             
                             <div class="form-group">
                                 <input type="tel" class="form-input" id="phone" placeholder=" ">
                                 <label for="phone" class="form-label">Telefon (nepovinné)</label>
+                                <small class="form-helper">Pro rychlejší komunikaci přes WhatsApp</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label-static">Co potřebujete?</label>
+                                <div class="form-checkboxes">
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="services" value="web">
+                                        <span class="checkbox-box">
+                                            <i class="fas fa-check"></i>
+                                        </span>
+                                        <span class="checkbox-text">Nový web nebo kompletní redesign</span>
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="services" value="ads">
+                                        <span class="checkbox-box">
+                                            <i class="fas fa-check"></i>
+                                        </span>
+                                        <span class="checkbox-text">PPC kampaně (Google Ads, Meta Ads)</span>
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="services" value="social">
+                                        <span class="checkbox-box">
+                                            <i class="fas fa-check"></i>
+                                        </span>
+                                        <span class="checkbox-text">Správa a růst sociálních sítí</span>
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="services" value="video">
+                                        <span class="checkbox-box">
+                                            <i class="fas fa-check"></i>
+                                        </span>
+                                        <span class="checkbox-text">Grafika a video produkce</span>
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="services" value="other">
+                                        <span class="checkbox-box">
+                                            <i class="fas fa-check"></i>
+                                        </span>
+                                        <span class="checkbox-text">Jiná spolupráce</span>
+                                    </label>
+                                </div>
+                                <small class="form-helper">Můžete vybrat více možností</small>
                             </div>
                             
                             <div class="form-group">
                                 <textarea class="form-input form-textarea" id="message" placeholder=" " required></textarea>
                                 <label for="message" class="form-label">Vaše zpráva</label>
+                                <small class="form-helper">Stačí pár vět o vašem projektu</small>
                             </div>
                             
-                            <button type="submit" class="form-submit">
-                                <span>Odeslat zprávu</span>
+                            <button type="submit" class="form-submit" id="submitBtn">
+                                <span class="submit-text">Odeslat zprávu</span>
+                                <span class="submit-loading" style="display: none;">
+                                    <i class="fas fa-spinner fa-spin"></i> Odesílám...
+                                </span>
                             </button>
+                            
+                            <div class="form-status" id="formStatus"></div>
                         </form>
+                        
+                        <!-- WhatsApp Alternative -->
+                        <div class="contact-quick">
+                            <p class="quick-title">Nechcete vyplňovat? Chápu.</p>
+                            <a href="https://wa.me/420123456789" class="whatsapp-button">
+                                <i class="fab fa-whatsapp"></i>
+                                <span class="whatsapp-text">
+                                    <strong>Napište na WhatsApp</strong>
+                                    <small>Tady to jde rychleji a bez formalit</small>
+                                </span>
+                            </a>
+                        </div>
                     </div>
                     
                     <!-- Contact Info -->
@@ -2949,8 +3218,8 @@
                                 <i class="fas fa-clock"></i>
                             </div>
                             <div class="contact-info-content">
-                                <div class="contact-info-label">Odpovíme do</div>
-                                <span class="contact-info-value">24 hodin</span>
+                                <div class="contact-info-label">Odpovíme</div>
+                                <span class="contact-info-value">Hned jak to půjde</span>
                             </div>
                         </div>
                         
@@ -2965,7 +3234,7 @@
                         </div>
                         
                         <div class="contact-social">
-                            <div class="contact-social-title">Sledujte nás</div>
+                            <div class="contact-social-title">Sociální sítě</div>
                             <div class="contact-social-links">
                                 <a href="https://instagram.com/webxagency" 
                                    class="contact-social-link" 
@@ -3227,9 +3496,9 @@
             let isDeleting = false;
             let charIndex = 0;
             
-            // Start with first word visible
+            // Start with empty text - will start typing immediately
             if (textSpan) {
-                textSpan.textContent = morphWords[0];
+                textSpan.textContent = '';
             }
             
             function typeWriter() {
@@ -3237,54 +3506,75 @@
                 
                 if (!isDeleting) {
                     // Typing
-                    currentWord = targetWord.substring(0, charIndex + 1);
-                    charIndex++;
-                    
-                    if (charIndex === targetWord.length) {
+                    if (charIndex < targetWord.length) {
+                        currentWord = targetWord.substring(0, charIndex + 1);
+                        charIndex++;
+                        
+                        // Update text
+                        if (textSpan) {
+                            textSpan.textContent = currentWord;
+                        }
+                        
+                        // Continue typing
+                        setTimeout(typeWriter, 150);
+                    } else {
                         // Word complete, wait then start deleting
                         setTimeout(() => {
                             isDeleting = true;
                             typeWriter();
                         }, 2500);
-                        return;
                     }
                 } else {
                     // Deleting
-                    currentWord = targetWord.substring(0, charIndex - 1);
-                    charIndex--;
-                    
-                    if (charIndex === 0) {
+                    if (charIndex > 0) {
+                        charIndex--;
+                        currentWord = targetWord.substring(0, charIndex);
+                        
+                        // Update text
+                        if (textSpan) {
+                            textSpan.textContent = currentWord || '\u00A0';
+                        }
+                        
+                        // Continue deleting
+                        setTimeout(typeWriter, 40);
+                    } else {
                         // Word deleted, move to next
                         isDeleting = false;
                         currentIndex = (currentIndex + 1) % morphWords.length;
+                        setTimeout(typeWriter, 1000); // Longer pause before typing next word
                     }
                 }
-                
-                // Update text
-                if (textSpan) {
-                    textSpan.textContent = currentWord || '\u00A0'; // Non-breaking space when empty
-                }
-                
-                // Continue typing/deleting
-                const speed = isDeleting ? 40 : 150;
-                setTimeout(typeWriter, speed);
             }
             
-            // Start typing animation after initial load
+            // Start typing animation after hero title animation completes
             setTimeout(() => {
-                isDeleting = true;
-                charIndex = morphWords[0].length;
                 typeWriter();
-            }, 3000);
+            }, 1500); // Start after hero title animates in
 
-            // Adjust morph container width
+            // Adjust morph container width - FIX for cut-off text
             function adjustMorphWidth() {
-                const measureEl = document.getElementById('heroMeasure');
                 const morphEl = document.getElementById('heroMorph');
+                const textSpan = document.querySelector('.hero-title-morph-text');
                 
-                if (measureEl && morphEl) {
-                    const textWidth = measureEl.offsetWidth;
-                    morphEl.style.width = textWidth + 'px';
+                if (morphEl && textSpan) {
+                    // Find the longest word for proper width
+                    let maxWidth = 0;
+                    const tempSpan = document.createElement('span');
+                    tempSpan.style.cssText = window.getComputedStyle(textSpan).cssText;
+                    tempSpan.style.position = 'absolute';
+                    tempSpan.style.visibility = 'hidden';
+                    tempSpan.style.whiteSpace = 'nowrap';
+                    document.body.appendChild(tempSpan);
+                    
+                    morphWords.forEach(word => {
+                        tempSpan.textContent = word;
+                        maxWidth = Math.max(maxWidth, tempSpan.offsetWidth);
+                    });
+                    
+                    document.body.removeChild(tempSpan);
+                    
+                    // Set width with some padding for cursor
+                    morphEl.style.width = (maxWidth + 20) + 'px';
                 }
             }
 
@@ -4071,6 +4361,193 @@
                 }
             });
         });
+
+        // Form functionality
+        function initFormFeatures() {
+            const form = document.getElementById('contactForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const formStatus = document.getElementById('formStatus');
+            
+            if (!form) return;
+            
+            // Form submission
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                // Show loading state
+                submitBtn.classList.add('loading');
+                submitBtn.disabled = true;
+                
+                // Simulate form submission (replace with actual API call)
+                setTimeout(() => {
+                    // Success state
+                    formStatus.className = 'form-status success';
+                    formStatus.innerHTML = '<i class="fas fa-check-circle"></i> Paráda! Máme to.';
+                    
+                    // Reset button
+                    submitBtn.classList.remove('loading');
+                    submitBtn.disabled = false;
+                    
+                    // Reset form after 3 seconds
+                    setTimeout(() => {
+                        form.reset();
+                        formStatus.style.display = 'none';
+                    }, 3000);
+                }, 2000);
+            });
+            
+            // Checkbox animations
+            const checkboxes = document.querySelectorAll('.checkbox-item');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('click', function() {
+                    const input = this.querySelector('input[type="checkbox"]');
+                    if (input) {
+                        // Animate checkbox on change
+                        gsap.fromTo(this, {
+                            scale: 0.98
+                        }, {
+                            scale: 1,
+                            duration: 0.2,
+                            ease: "back.out(2)"
+                        });
+                    }
+                });
+            });
+            
+            // Form ScrollTrigger animation
+            if (isDesktop()) {
+                const formInputs = form.querySelectorAll('.form-input, .checkbox-item');
+                
+                ScrollTrigger.create({
+                    trigger: form,
+                    start: "top 70%",
+                    once: true,
+                    onEnter: () => {
+                        // Animate form fields sequentially
+                        gsap.timeline()
+                            .to(formInputs[0], { // Name
+                                borderColor: 'var(--color-accent)',
+                                y: -2,
+                                duration: 0.4,
+                                ease: "power3.out"
+                            })
+                            .to(formInputs[0], {
+                                borderColor: 'var(--color-border)',
+                                y: 0,
+                                duration: 0.4,
+                                ease: "power3.out"
+                            }, "+=0.5")
+                            .to(formInputs[1], { // Email
+                                borderColor: 'var(--color-accent)',
+                                y: -2,
+                                duration: 0.4,
+                                ease: "power3.out"
+                            }, "-=0.6")
+                            .to(formInputs[1], {
+                                borderColor: 'var(--color-border)',
+                                y: 0,
+                                duration: 0.4,
+                                ease: "power3.out"
+                            }, "+=0.5")
+                            .to(formInputs[2], { // Phone
+                                borderColor: 'var(--color-accent)',
+                                y: -2,
+                                duration: 0.4,
+                                ease: "power3.out"
+                            }, "-=0.6")
+                            .to(formInputs[2], {
+                                borderColor: 'var(--color-border)',
+                                y: 0,
+                                duration: 0.4,
+                                ease: "power3.out"
+                            }, "+=0.5");
+                        
+                        // Animate checkboxes
+                        const checkboxItems = form.querySelectorAll('.checkbox-item');
+                        checkboxItems.forEach((item, index) => {
+                            gsap.fromTo(item, {
+                                borderColor: 'var(--color-border)',
+                                x: -10,
+                                opacity: 0.7
+                            }, {
+                                borderColor: 'var(--color-accent)',
+                                x: 0,
+                                opacity: 1,
+                                duration: 0.3,
+                                delay: 1.2 + (index * 0.1),
+                                ease: "power3.out"
+                            });
+                            
+                            gsap.to(item, {
+                                borderColor: 'var(--color-border)',
+                                duration: 0.3,
+                                delay: 1.8 + (index * 0.1),
+                                ease: "power3.out"
+                            });
+                        });
+                        
+                        // Animate textarea
+                        const textarea = form.querySelector('.form-textarea');
+                        if (textarea) {
+                            gsap.timeline()
+                                .to(textarea, {
+                                    borderColor: 'var(--color-accent)',
+                                    y: -2,
+                                    duration: 0.4,
+                                    delay: 2.2,
+                                    ease: "power3.out"
+                                })
+                                .to(textarea, {
+                                    borderColor: 'var(--color-border)',
+                                    y: 0,
+                                    duration: 0.4,
+                                    ease: "power3.out"
+                                }, "+=0.5");
+                        }
+                        
+                        // Pulse submit button
+                        gsap.timeline()
+                            .to(submitBtn, {
+                                scale: 1.05,
+                                duration: 0.3,
+                                delay: 2.8,
+                                ease: "power3.out"
+                            })
+                            .to(submitBtn, {
+                                scale: 1,
+                                duration: 0.3,
+                                ease: "power3.out"
+                            });
+                    }
+                });
+            } else {
+                // Mobile - simpler animation
+                ScrollTrigger.create({
+                    trigger: form,
+                    start: "top 80%",
+                    once: true,
+                    onEnter: () => {
+                        const allInputs = form.querySelectorAll('.form-input, .checkbox-item');
+                        gsap.to(allInputs, {
+                            borderColor: 'var(--color-accent)',
+                            duration: 0.5,
+                            stagger: 0.05,
+                            ease: "power3.out"
+                        });
+                        
+                        gsap.to(allInputs, {
+                            borderColor: 'var(--color-border)',
+                            duration: 0.5,
+                            delay: 1.5,
+                            ease: "power3.out"
+                        });
+                    }
+                });
+            }
+        }
+        
+        // Initialize form features after DOM loads
+        initFormFeatures();
     </script>
 </body>
 </html>
