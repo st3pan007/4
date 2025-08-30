@@ -1803,6 +1803,13 @@
             align-items: start;
         }
 
+        @media (min-width: 969px) {
+            .contact-content {
+                grid-template-columns: 60% 40%;
+                gap: 3rem;
+            }
+        }
+
         @media (max-width: 968px) {
             .contact-content {
                 grid-template-columns: 1fr;
@@ -1958,53 +1965,203 @@
             line-height: 1.4;
         }
 
-        /* Form status messages */
-        .form-status {
-            margin-top: 1.5rem;
-            padding: 1rem;
-            border-radius: 8px;
-            display: none;
+        /* Custom dropdown styles */
+        .custom-dropdown {
+            position: relative;
+            width: 100%;
+        }
+
+        .dropdown-trigger {
+            display: flex;
             align-items: center;
-            gap: 0.75rem;
+            justify-content: space-between;
+            padding: 1.5rem 1rem;
+            background: rgba(26, 26, 26, 0.5);
+            border: 2px solid var(--color-border);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
-        .form-status.success {
-            background: rgba(74, 222, 128, 0.1);
-            border: 1px solid rgba(74, 222, 128, 0.3);
-            color: var(--color-success);
+        @media (max-width: 968px) {
+            .dropdown-trigger {
+                background: rgba(26, 26, 26, 0.9);
+            }
+        }
+
+        .dropdown-trigger:hover {
+            border-color: var(--color-accent-dim);
+        }
+
+        .dropdown-trigger.active {
+            border-color: var(--color-accent);
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        .dropdown-label {
+            color: var(--color-text);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .dropdown-selected {
+            color: var(--color-text-muted);
+            font-size: 0.95rem;
+            flex: 1;
+            text-align: left;
+            margin-left: 1rem;
+        }
+
+        .dropdown-selected.has-selection {
+            color: var(--color-text);
+        }
+
+        .dropdown-trigger i {
+            color: var(--color-text-muted);
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown-trigger.active i {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--color-surface-light);
+            border: 2px solid var(--color-accent);
+            border-top: none;
+            border-radius: 0 0 12px 12px;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .dropdown-menu.active {
+            max-height: 300px;
+            opacity: 1;
+            overflow-y: auto;
+        }
+
+        .dropdown-option {
             display: flex;
+            align-items: center;
+            padding: 0.875rem 1rem;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            border-bottom: 1px solid var(--color-border);
         }
 
-        .form-status.error {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            color: #ef4444;
-            display: flex;
+        .dropdown-option:last-child {
+            border-bottom: none;
         }
 
-        /* Submit button states */
-        .submit-text,
-        .submit-loading {
+        .dropdown-option:hover {
+            background: rgba(185, 104, 255, 0.1);
+        }
+
+        .dropdown-option input[type="checkbox"] {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .dropdown-checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--color-border);
+            border-radius: 4px;
+            margin-right: 0.75rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.5rem;
+            transition: all 0.2s ease;
         }
 
-        .form-submit.loading .submit-text {
-            display: none;
+        .dropdown-checkbox i {
+            font-size: 0.7rem;
+            color: var(--color-bg);
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.2s ease;
         }
 
-        .form-submit.loading .submit-loading {
-            display: flex !important;
+        .dropdown-option input:checked ~ .dropdown-checkbox {
+            background: var(--color-gradient-2);
+            border-color: transparent;
         }
 
-        /* WhatsApp alternative */
+        .dropdown-option input:checked ~ .dropdown-checkbox i {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .dropdown-option-text {
+            font-size: 0.95rem;
+            color: var(--color-text);
+        }
+
+        /* WhatsApp alternative - upravený styling bez zeleného rámečku */
         .contact-quick {
-            margin-top: 3rem;
-            padding-top: 2.5rem;
-            border-top: 1px solid var(--color-border);
+            margin-top: 0;
+            padding: 2rem 0;
             text-align: center;
+        }
+
+        @media (max-width: 968px) {
+            .contact-quick {
+                margin-top: 3rem;
+                padding-top: 2.5rem;
+                border-top: 1px solid var(--color-border);
+            }
+        }
+
+        /* ROBUSTNÍ ŘEŠENÍ PRO DISPLAY LOGIKU */
+        /* Desktop only - nad 969px */
+        .contact-quick-desktop {
+            display: none; /* Default hidden */
+        }
+
+        @media (min-width: 969px) {
+            .contact-quick-desktop {
+                display: block !important;
+            }
+            
+            .contact-quick-mobile {
+                display: none !important;
+            }
+        }
+
+        /* Mobile only - pod 969px */
+        .contact-quick-mobile {
+            display: none; /* Default hidden */
+        }
+
+        @media (max-width: 968px) {
+            .contact-quick-mobile {
+                display: block !important;
+            }
+            
+            .contact-quick-desktop {
+                display: none !important;
+            }
+        }
+
+        /* Contact info wrapper for desktop layout */
+        .contact-info-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        @media (max-width: 968px) {
+            .contact-info-wrapper {
+                display: contents; /* Removes wrapper on mobile */
+            }
         }
 
         .quick-title {
@@ -2052,17 +2209,14 @@
             opacity: 0.9;
         }
 
+        /* Ujištění že dropdown a ostatní elementy fungují správně */
         @media (max-width: 968px) {
             .contact-info {
                 min-height: auto;
             }
             
-            .form-checkboxes {
-                gap: 0.5rem;
-            }
-            
-            .checkbox-item {
-                padding: 0.875rem 1rem;
+            .dropdown-menu {
+                max-width: 100%;
             }
         }
 
@@ -3098,7 +3252,7 @@
                 </div>
                 
                 <div class="contact-content">
-                    <!-- Contact Form -->
+                    <!-- Contact Form - LEFT SIDE -->
                     <div class="contact-form">
                         <form action="#" method="POST" id="contactForm">
                             <div class="form-group">
@@ -3119,43 +3273,49 @@
                             </div>
                             
                             <div class="form-group">
-                                <label class="form-label-static">Co potřebujete?</label>
-                                <div class="form-checkboxes">
-                                    <label class="checkbox-item">
-                                        <input type="checkbox" name="services" value="web">
-                                        <span class="checkbox-box">
-                                            <i class="fas fa-check"></i>
-                                        </span>
-                                        <span class="checkbox-text">Nový web nebo kompletní redesign</span>
-                                    </label>
-                                    <label class="checkbox-item">
-                                        <input type="checkbox" name="services" value="ads">
-                                        <span class="checkbox-box">
-                                            <i class="fas fa-check"></i>
-                                        </span>
-                                        <span class="checkbox-text">PPC kampaně (Google Ads, Meta Ads)</span>
-                                    </label>
-                                    <label class="checkbox-item">
-                                        <input type="checkbox" name="services" value="social">
-                                        <span class="checkbox-box">
-                                            <i class="fas fa-check"></i>
-                                        </span>
-                                        <span class="checkbox-text">Správa a růst sociálních sítí</span>
-                                    </label>
-                                    <label class="checkbox-item">
-                                        <input type="checkbox" name="services" value="video">
-                                        <span class="checkbox-box">
-                                            <i class="fas fa-check"></i>
-                                        </span>
-                                        <span class="checkbox-text">Grafika a video produkce</span>
-                                    </label>
-                                    <label class="checkbox-item">
-                                        <input type="checkbox" name="services" value="other">
-                                        <span class="checkbox-box">
-                                            <i class="fas fa-check"></i>
-                                        </span>
-                                        <span class="checkbox-text">Jiná spolupráce</span>
-                                    </label>
+                                <div class="custom-dropdown" id="servicesDropdown">
+                                    <div class="dropdown-trigger" id="dropdownTrigger">
+                                        <span class="dropdown-label">Co potřebujete?</span>
+                                        <span class="dropdown-selected" id="dropdownSelected">Vyberte služby...</span>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </div>
+                                    <div class="dropdown-menu" id="dropdownMenu">
+                                        <label class="dropdown-option">
+                                            <input type="checkbox" name="services" value="web">
+                                            <span class="dropdown-checkbox">
+                                                <i class="fas fa-check"></i>
+                                            </span>
+                                            <span class="dropdown-option-text">Nový web nebo kompletní redesign</span>
+                                        </label>
+                                        <label class="dropdown-option">
+                                            <input type="checkbox" name="services" value="ads">
+                                            <span class="dropdown-checkbox">
+                                                <i class="fas fa-check"></i>
+                                            </span>
+                                            <span class="dropdown-option-text">PPC kampaně (Google Ads, Meta Ads)</span>
+                                        </label>
+                                        <label class="dropdown-option">
+                                            <input type="checkbox" name="services" value="social">
+                                            <span class="dropdown-checkbox">
+                                                <i class="fas fa-check"></i>
+                                            </span>
+                                            <span class="dropdown-option-text">Správa a růst sociálních sítí</span>
+                                        </label>
+                                        <label class="dropdown-option">
+                                            <input type="checkbox" name="services" value="video">
+                                            <span class="dropdown-checkbox">
+                                                <i class="fas fa-check"></i>
+                                            </span>
+                                            <span class="dropdown-option-text">Grafika a video produkce</span>
+                                        </label>
+                                        <label class="dropdown-option">
+                                            <input type="checkbox" name="services" value="other">
+                                            <span class="dropdown-checkbox">
+                                                <i class="fas fa-check"></i>
+                                            </span>
+                                            <span class="dropdown-option-text">Jiná spolupráce</span>
+                                        </label>
+                                    </div>
                                 </div>
                                 <small class="form-helper">Můžete vybrat více možností</small>
                             </div>
@@ -3176,8 +3336,8 @@
                             <div class="form-status" id="formStatus"></div>
                         </form>
                         
-                        <!-- WhatsApp Alternative -->
-                        <div class="contact-quick">
+                        <!-- WhatsApp Alternative - MOBILE ONLY -->
+                        <div class="contact-quick contact-quick-mobile">
                             <p class="quick-title">Nechcete vyplňovat? Chápu.</p>
                             <a href="https://wa.me/420123456789" class="whatsapp-button">
                                 <i class="fab fa-whatsapp"></i>
@@ -3189,67 +3349,82 @@
                         </div>
                     </div>
                     
-                    <!-- Contact Info -->
-                    <div class="contact-info">
-                        <h3 class="contact-info-title">Spojte se s námi</h3>
-                        
-                        <div class="contact-info-item">
-                            <div class="contact-info-icon">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                            <div class="contact-info-content">
-                                <div class="contact-info-label">Email</div>
-                                <a href="mailto:hello@webx.cz" class="contact-info-value">hello@webx.cz</a>
-                            </div>
+                    <!-- RIGHT SIDE - DESKTOP ONLY -->
+                    <div class="contact-info-wrapper">
+                        <!-- WhatsApp Alternative - DESKTOP ONLY, OUTSIDE INFO BOX -->
+                        <div class="contact-quick contact-quick-desktop">
+                            <p class="quick-title">Nechcete vyplňovat? Chápu.</p>
+                            <a href="https://wa.me/420123456789" class="whatsapp-button">
+                                <i class="fab fa-whatsapp"></i>
+                                <span class="whatsapp-text">
+                                    <strong>Napište na WhatsApp</strong>
+                                    <small>Tady to jde rychleji a bez formalit</small>
+                                </span>
+                            </a>
                         </div>
                         
-                        <div class="contact-info-item">
-                            <div class="contact-info-icon">
-                                <i class="fas fa-phone"></i>
+                        <!-- Contact Info Box -->
+                        <div class="contact-info">
+                            <h3 class="contact-info-title">Spojte se s námi</h3>
+                            
+                            <div class="contact-info-item">
+                                <div class="contact-info-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="contact-info-content">
+                                    <div class="contact-info-label">Email</div>
+                                    <a href="mailto:hello@webx.cz" class="contact-info-value">hello@webx.cz</a>
+                                </div>
                             </div>
-                            <div class="contact-info-content">
-                                <div class="contact-info-label">Telefon</div>
-                                <a href="tel:+420123456789" class="contact-info-value">+420 123 456 789</a>
+                            
+                            <div class="contact-info-item">
+                                <div class="contact-info-icon">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div class="contact-info-content">
+                                    <div class="contact-info-label">Telefon</div>
+                                    <a href="tel:+420123456789" class="contact-info-value">+420 123 456 789</a>
+                                </div>
                             </div>
-                        </div>
-                        
-                        <div class="contact-info-item">
-                            <div class="contact-info-icon">
-                                <i class="fas fa-clock"></i>
+                            
+                            <div class="contact-info-item">
+                                <div class="contact-info-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="contact-info-content">
+                                    <div class="contact-info-label">Odpovíme</div>
+                                    <span class="contact-info-value">Hned jak to půjde</span>
+                                </div>
                             </div>
-                            <div class="contact-info-content">
-                                <div class="contact-info-label">Odpovíme</div>
-                                <span class="contact-info-value">Hned jak to půjde</span>
+                            
+                            <div class="contact-info-item">
+                                <div class="contact-info-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div class="contact-info-content">
+                                    <div class="contact-info-label">Kde nás najdete</div>
+                                    <span class="contact-info-value">Praha, Czech Republic</span>
+                                </div>
                             </div>
-                        </div>
-                        
-                        <div class="contact-info-item">
-                            <div class="contact-info-icon">
-                                <i class="fas fa-map-marker-alt"></i>
-                            </div>
-                            <div class="contact-info-content">
-                                <div class="contact-info-label">Kde nás najdete</div>
-                                <span class="contact-info-value">Praha, Czech Republic</span>
-                            </div>
-                        </div>
-                        
-                        <div class="contact-social">
-                            <div class="contact-social-title">Sociální sítě</div>
-                            <div class="contact-social-links">
-                                <a href="https://instagram.com/webxagency" 
-                                   class="contact-social-link" 
-                                   target="_blank"
-                                   rel="noopener noreferrer"
-                                   aria-label="Instagram">
-                                    <i class="fab fa-instagram"></i>
-                                </a>
-                                <a href="https://wa.me/420123456789" 
-                                   class="contact-social-link" 
-                                   target="_blank"
-                                   rel="noopener noreferrer"
-                                   aria-label="WhatsApp">
-                                    <i class="fab fa-whatsapp"></i>
-                                </a>
+                            
+                            <div class="contact-social">
+                                <div class="contact-social-title">Sociální sítě</div>
+                                <div class="contact-social-links">
+                                    <a href="https://instagram.com/webxagency" 
+                                       class="contact-social-link" 
+                                       target="_blank"
+                                       rel="noopener noreferrer"
+                                       aria-label="Instagram">
+                                        <i class="fab fa-instagram"></i>
+                                    </a>
+                                    <a href="https://wa.me/420123456789" 
+                                       class="contact-social-link" 
+                                       target="_blank"
+                                       rel="noopener noreferrer"
+                                       aria-label="WhatsApp">
+                                        <i class="fab fa-whatsapp"></i>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -4370,6 +4545,65 @@
             
             if (!form) return;
             
+            // Dropdown functionality
+            const dropdownTrigger = document.getElementById('dropdownTrigger');
+            const dropdownMenu = document.getElementById('dropdownMenu');
+            const dropdownSelected = document.getElementById('dropdownSelected');
+            const dropdownCheckboxes = dropdownMenu?.querySelectorAll('input[type="checkbox"]');
+            
+            if (dropdownTrigger && dropdownMenu) {
+                // Toggle dropdown
+                dropdownTrigger.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const isActive = dropdownTrigger.classList.contains('active');
+                    
+                    if (isActive) {
+                        dropdownTrigger.classList.remove('active');
+                        dropdownMenu.classList.remove('active');
+                    } else {
+                        dropdownTrigger.classList.add('active');
+                        dropdownMenu.classList.add('active');
+                    }
+                });
+                
+                // Update selected text
+                function updateDropdownText() {
+                    const selected = [];
+                    dropdownCheckboxes.forEach(checkbox => {
+                        if (checkbox.checked) {
+                            const text = checkbox.parentElement.querySelector('.dropdown-option-text').textContent;
+                            selected.push(text);
+                        }
+                    });
+                    
+                    if (selected.length > 0) {
+                        dropdownSelected.textContent = selected.length === 1 
+                            ? selected[0] 
+                            : `Vybráno: ${selected.length} služeb`;
+                        dropdownSelected.classList.add('has-selection');
+                    } else {
+                        dropdownSelected.textContent = 'Vyberte služby...';
+                        dropdownSelected.classList.remove('has-selection');
+                    }
+                }
+                
+                // Handle checkbox changes
+                dropdownCheckboxes.forEach(checkbox => {
+                    checkbox.addEventListener('change', updateDropdownText);
+                });
+                
+                // Prevent dropdown from closing when clicking inside
+                dropdownMenu.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                });
+                
+                // Close dropdown when clicking outside
+                document.addEventListener('click', () => {
+                    dropdownTrigger.classList.remove('active');
+                    dropdownMenu.classList.remove('active');
+                });
+            }
+            
             // Form submission
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
@@ -4392,142 +4626,58 @@
                     setTimeout(() => {
                         form.reset();
                         formStatus.style.display = 'none';
+                        updateDropdownText();
                     }, 3000);
                 }, 2000);
             });
             
-            // Checkbox animations
-            const checkboxes = document.querySelectorAll('.checkbox-item');
-            checkboxes.forEach(checkbox => {
-                checkbox.addEventListener('click', function() {
-                    const input = this.querySelector('input[type="checkbox"]');
-                    if (input) {
-                        // Animate checkbox on change
-                        gsap.fromTo(this, {
-                            scale: 0.98
-                        }, {
-                            scale: 1,
-                            duration: 0.2,
-                            ease: "back.out(2)"
-                        });
-                    }
-                });
-            });
-            
-            // Form ScrollTrigger animation
+            // Form ScrollTrigger animation - DESKTOP ONLY SUBTLE VERSION
             if (isDesktop()) {
-                const formInputs = form.querySelectorAll('.form-input, .checkbox-item');
-                
                 ScrollTrigger.create({
                     trigger: form,
                     start: "top 70%",
                     once: true,
                     onEnter: () => {
-                        // Animate form fields sequentially
-                        gsap.timeline()
-                            .to(formInputs[0], { // Name
-                                borderColor: 'var(--color-accent)',
-                                y: -2,
-                                duration: 0.4,
-                                ease: "power3.out"
-                            })
-                            .to(formInputs[0], {
-                                borderColor: 'var(--color-border)',
-                                y: 0,
-                                duration: 0.4,
-                                ease: "power3.out"
-                            }, "+=0.5")
-                            .to(formInputs[1], { // Email
-                                borderColor: 'var(--color-accent)',
-                                y: -2,
-                                duration: 0.4,
-                                ease: "power3.out"
-                            }, "-=0.6")
-                            .to(formInputs[1], {
-                                borderColor: 'var(--color-border)',
-                                y: 0,
-                                duration: 0.4,
-                                ease: "power3.out"
-                            }, "+=0.5")
-                            .to(formInputs[2], { // Phone
-                                borderColor: 'var(--color-accent)',
-                                y: -2,
-                                duration: 0.4,
-                                ease: "power3.out"
-                            }, "-=0.6")
-                            .to(formInputs[2], {
-                                borderColor: 'var(--color-border)',
-                                y: 0,
-                                duration: 0.4,
-                                ease: "power3.out"
-                            }, "+=0.5");
-                        
-                        // Animate checkboxes
-                        const checkboxItems = form.querySelectorAll('.checkbox-item');
-                        checkboxItems.forEach((item, index) => {
-                            gsap.fromTo(item, {
-                                borderColor: 'var(--color-border)',
-                                x: -10,
-                                opacity: 0.7
-                            }, {
-                                borderColor: 'var(--color-accent)',
-                                x: 0,
-                                opacity: 1,
-                                duration: 0.3,
-                                delay: 1.2 + (index * 0.1),
-                                ease: "power3.out"
-                            });
-                            
-                            gsap.to(item, {
-                                borderColor: 'var(--color-border)',
-                                duration: 0.3,
-                                delay: 1.8 + (index * 0.1),
-                                ease: "power3.out"
-                            });
+                        // Subtle glow on whole form
+                        gsap.to(form, {
+                            boxShadow: '0 0 40px rgba(185, 104, 255, 0.15)',
+                            duration: 1,
+                            ease: "power2.out"
                         });
                         
-                        // Animate textarea
-                        const textarea = form.querySelector('.form-textarea');
-                        if (textarea) {
-                            gsap.timeline()
-                                .to(textarea, {
-                                    borderColor: 'var(--color-accent)',
-                                    y: -2,
-                                    duration: 0.4,
-                                    delay: 2.2,
-                                    ease: "power3.out"
-                                })
-                                .to(textarea, {
-                                    borderColor: 'var(--color-border)',
-                                    y: 0,
-                                    duration: 0.4,
-                                    ease: "power3.out"
-                                }, "+=0.5");
-                        }
+                        // Gentle highlight on inputs
+                        const inputs = form.querySelectorAll('.form-input, .dropdown-trigger');
+                        gsap.to(inputs, {
+                            borderColor: 'rgba(185, 104, 255, 0.4)',
+                            duration: 0.8,
+                            stagger: 0.08,
+                            ease: "power2.out"
+                        });
                         
-                        // Pulse submit button
-                        gsap.timeline()
-                            .to(submitBtn, {
-                                scale: 1.05,
-                                duration: 0.3,
-                                delay: 2.8,
-                                ease: "power3.out"
-                            })
-                            .to(submitBtn, {
-                                scale: 1,
-                                duration: 0.3,
-                                ease: "power3.out"
-                            });
+                        // Reset after animation
+                        gsap.to(inputs, {
+                            borderColor: 'var(--color-border)',
+                            duration: 0.6,
+                            delay: 2,
+                            ease: "power2.out"
+                        });
+                        
+                        gsap.to(form, {
+                            boxShadow: 'none',
+                            duration: 0.8,
+                            delay: 2.5,
+                            ease: "power2.out"
+                        });
                     }
                 });
             } else {
-                // Mobile - simpler animation
+                // Mobile - keep existing animation
                 ScrollTrigger.create({
                     trigger: form,
                     start: "top 80%",
                     once: true,
                     onEnter: () => {
-                        const allInputs = form.querySelectorAll('.form-input, .checkbox-item');
+                        const allInputs = form.querySelectorAll('.form-input, .dropdown-trigger');
                         gsap.to(allInputs, {
                             borderColor: 'var(--color-accent)',
                             duration: 0.5,
