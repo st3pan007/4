@@ -883,13 +883,20 @@
 
         .dna-timeline {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 2rem;
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
-        @media (max-width: 968px) {
+        @media (max-width: 1200px) and (min-width: 769px) {
+            .dna-timeline {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
             .dna-timeline {
                 grid-template-columns: 1fr;
             }
@@ -897,7 +904,7 @@
 
         .dna-card {
             background: var(--color-surface-light);
-            padding: 3rem 2rem;
+            padding: 2rem 1.5rem 2.5rem;
             border-radius: 16px;
             border: 1px solid var(--color-border);
             position: relative;
@@ -907,7 +914,7 @@
 
         .dna-card-number {
             font-family: var(--font-display);
-            font-size: 5rem;
+            font-size: 4rem;
             font-weight: 800;
             background: var(--color-gradient-2);
             -webkit-background-clip: text;
@@ -915,8 +922,8 @@
             background-clip: text;
             opacity: 0.3;
             position: absolute;
-            top: 1rem;
-            right: 2rem;
+            top: 0.5rem;
+            right: 1.5rem;
         }
 
         .dna-card-icon {
@@ -2739,7 +2746,7 @@
                     <span class="lang-separator">/</span>
                     <button class="lang-btn" data-lang="en">EN</button>
                     <span class="lang-separator">/</span>
-                    <button class="lang-btn" data-lang="sk">SK</button>
+                    <button class="lang-btn" data-lang="pl">PL</button>
                 </div>
                 
                 <!-- Desktop Menu Button -->
@@ -2764,37 +2771,37 @@
                         <li class="menu-item">
                             <a href="#home" class="menu-link">
                                 <span class="menu-link-number">01</span>
-                                <span class="menu-link-text">Domů <span class="menu-link-arrow">→</span></span>
+                                <span class="menu-link-text">Domů <span class="menu-link-arrow">></span></span>
                             </a>
                         </li>
                         <li class="menu-item">
                             <a href="#dna" class="menu-link">
                                 <span class="menu-link-number">02</span>
-                                <span class="menu-link-text">O nás <span class="menu-link-arrow">→</span></span>
+                                <span class="menu-link-text">O nás <span class="menu-link-arrow">></span></span>
                             </a>
                         </li>
                         <li class="menu-item">
                             <a href="#services" class="menu-link">
                                 <span class="menu-link-number">03</span>
-                                <span class="menu-link-text">Služby <span class="menu-link-arrow">→</span></span>
+                                <span class="menu-link-text">Služby <span class="menu-link-arrow">></span></span>
                             </a>
                         </li>
                         <li class="menu-item">
                             <a href="#process" class="menu-link">
                                 <span class="menu-link-number">04</span>
-                                <span class="menu-link-text">Proces <span class="menu-link-arrow">→</span></span>
+                                <span class="menu-link-text">Proces <span class="menu-link-arrow">></span></span>
                             </a>
                         </li>
                         <li class="menu-item">
                             <a href="#portfolio" class="menu-link">
                                 <span class="menu-link-number">05</span>
-                                <span class="menu-link-text">Portfolio <span class="menu-link-arrow">→</span></span>
+                                <span class="menu-link-text">Portfolio <span class="menu-link-arrow">></span></span>
                             </a>
                         </li>
                         <li class="menu-item">
                             <a href="#contact" class="menu-link">
                                 <span class="menu-link-number">06</span>
-                                <span class="menu-link-text">Kontakt <span class="menu-link-arrow">→</span></span>
+                                <span class="menu-link-text">Kontakt <span class="menu-link-arrow">></span></span>
                             </a>
                         </li>
                     </ul>
@@ -2803,7 +2810,7 @@
                 <div class="menu-contact">
                     <h3 class="menu-contact-title">Spojte se s námi</h3>
                     <div class="menu-contact-item">hello@webx.cz</div>
-                    <div class="menu-contact-item">+420 123 456 789</div>
+                    <div class="menu-contact-item">+420 728 133 195</div>
                     <div class="menu-contact-item">Praha, Czech Republic</div>
                     
                     <!-- Desktop Social Icons - pouze Instagram a WhatsApp -->
@@ -2815,7 +2822,7 @@
                            aria-label="Instagram">
                             <i class="fab fa-instagram"></i>
                         </a>
-                        <a href="https://wa.me/420123456789" 
+                        <a href="https://wa.me/420728133195" 
                            class="menu-contact-social" 
                            target="_blank"
                            rel="noopener noreferrer"
@@ -2852,7 +2859,7 @@
                 <div class="menu-lang-indicator"></div>
                 <button class="menu-lang-btn-new active" data-lang="cz">CZ</button>
                 <button class="menu-lang-btn-new" data-lang="en">EN</button>
-                <button class="menu-lang-btn-new" data-lang="sk">SK</button>
+                <button class="menu-lang-btn-new" data-lang="pl">PL</button>
             </div>
         </div>
     </div>
@@ -2876,7 +2883,7 @@
                 
                 <h1 class="hero-title">
                     <span class="hero-title-line">
-                        <span><span class="hero-title-accent">Tvoříme</span> weby,</span>
+                        <span><span class="hero-title-accent">Tvoříme</span> značky,</span>
                     </span>
                     <span class="hero-title-line">
                         <span>které jsou</span>
@@ -2892,10 +2899,10 @@
                 
                 <div class="hero-cta-wrapper">
                     <a href="#contact" class="btn btn-primary">
-                        <span>Začít projekt</span>
+                        <span>Pojďme začít</span>
                     </a>
                     <a href="#portfolio" class="btn btn-secondary">
-                        <span>Naše práce</span>
+                        <span>Naše projekty</span>
                     </a>
                 </div>
             </div>
@@ -2910,8 +2917,8 @@
         
         <div class="container">
             <div class="dna-header">
-                <span class="dna-label">Náš přístup</span>
-                <h2 class="dna-title">Na čem stavíme</h2>
+                <span class="dna-label">Proč zrovna my?</span>
+                <h2 class="dna-title">4 věci, které jinde nedostanete</h2>
             </div>
             
             <div class="dna-timeline">
@@ -2920,31 +2927,42 @@
                     <div class="dna-card-icon">
                         <i class="fas fa-rocket"></i>
                     </div>
-                    <h3 class="dna-card-title">Rychlost</h3>
+                    <h3 class="dna-card-title">Dodáváme, když slíbíme</h3>
                     <p class="dna-card-text">
-                        Web připraven během 1-2 týdnů. Rychlé dodání bez kompromisů v kvalitě.
+                        Nejsme agentura, kde se projekty táhnou měsíce. Držíme tempo a termíny. Vždy.
                     </p>
                 </div>
                 
                 <div class="dna-card">
                     <span class="dna-card-number">02</span>
                     <div class="dna-card-icon">
-                        <i class="fas fa-gem"></i>
+                        <i class="fas fa-copy"></i>
                     </div>
-                    <h3 class="dna-card-title">Originalita</h3>
+                    <h3 class="dna-card-title">Ctrl+C a Ctrl+V nepoužíváme</h3>
                     <p class="dna-card-text">
-                        Žádné šablony. Každý projekt je unikátní dílo šité na míru vaší značce.
+                        Každý projekt děláme na míru. Žádné templaty z roku 2010. Vaše konkurence se bude ptát, kdo vám to dělal.
                     </p>
                 </div>
                 
                 <div class="dna-card">
                     <span class="dna-card-number">03</span>
                     <div class="dna-card-icon">
-                        <i class="fas fa-shield-alt"></i>
+                        <i class="fas fa-sliders-h"></i>
                     </div>
-                    <h3 class="dna-card-title">Transparentnost</h3>
+                    <h3 class="dna-card-title">Ladíme do posledního detailu</h3>
                     <p class="dna-card-text">
-                        Jasné ceny, žádné skryté poplatky. Máte plnou kontrolu nad projektem.
+                        Každá připomínka je pro nás důležitá. Upravujeme a vylepšujeme, dokud nejste absolutně spokojení.
+                    </p>
+                </div>
+                
+                <div class="dna-card">
+                    <span class="dna-card-number">04</span>
+                    <div class="dna-card-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3 class="dna-card-title">Jsme tu pro Vás i po spuštění</h3>
+                    <p class="dna-card-text">
+                        První měsíc podpory v ceně. Pak je to na Vás - paušál, úpravy dle potřeb, nebo bez nás.
                     </p>
                 </div>
             </div>
@@ -2960,84 +2978,84 @@
         
         <div class="container">
             <div class="services-header">
-                <span class="services-label">Co umíme nejlépe</span>
-                <h2 class="services-title">Vaše digitální agentura</h2>
+                <span class="services-label">Full service? Přesně tak</span>
+                <h2 class="services-title">Všechno, co vaše značka potřebuje</h2>
                 <p class="services-subtitle">
-                    Komplexní služby od návrhu po realizaci. Vytváříme digitální zážitky, které fungují.
+                    A hlavně – nemusíte shánět 15 různých lidí. Stačíme my.
                 </p>
             </div>
             
             <div class="services-grid">
-                <!-- Wide Card - Web Design -->
+                <!-- Wide Card - Weby, které fungují -->
                 <div class="service-card service-card--wide">
                     <span class="service-number">01</span>
                     <div class="service-shape"></div>
                     <div>
-                        <i class="service-icon fas fa-palette"></i>
-                        <h3 class="service-title">Web Design</h3>
+                        <i class="service-icon fas fa-laptop-code"></i>
+                        <h3 class="service-title">Weby, které fungují</h3>
                         <p class="service-description">
-                            Vytváříme vizuální identity, které zaujmou na první pohled a prodávají. Každý pixel má svůj účel.
+                            Rychlé načítání, sexy design, jasná navigace. Prostě fungují, jak mají.
                         </p>
                     </div>
                 </div>
 
-                <!-- Regular Card - Development -->
+                <!-- Regular Card - Logo & Branding -->
                 <div class="service-card">
                     <span class="service-number">02</span>
                     <div>
-                        <i class="service-icon fas fa-code"></i>
-                        <h3 class="service-title">Development</h3>
+                        <i class="service-icon fas fa-palette"></i>
+                        <h3 class="service-title">Logo & Branding</h3>
                         <p class="service-description">
-                            Čistý kód a bleskové načítání. Moderní technologie.
+                            Uděláme z vás značku, ne jen IČO s názvem.
                         </p>
                     </div>
                 </div>
 
-                <!-- Regular Card - Motion -->
+                <!-- Regular Card - Video & Motion -->
                 <div class="service-card">
                     <span class="service-number">03</span>
                     <div>
-                        <i class="service-icon fas fa-magic"></i>
-                        <h3 class="service-title">Motion</h3>
+                        <i class="service-icon fas fa-video"></i>
+                        <h3 class="service-title">Video & Motion</h3>
                         <p class="service-description">
-                            Animace, které oživí váš web. Plynulé přechody.
+                            Od TikToků po firemní videa. Sestříháme cokoliv.
                         </p>
                     </div>
                 </div>
 
-                <!-- Regular Card - Branding -->
+                <!-- Regular Card - Offline grafika -->
                 <div class="service-card">
                     <span class="service-number">04</span>
                     <div>
-                        <i class="service-icon fas fa-fingerprint"></i>
-                        <h3 class="service-title">Branding</h3>
+                        <i class="service-icon fas fa-print"></i>
+                        <h3 class="service-title">Offline grafika</h3>
                         <p class="service-description">
-                            Kompletní vizuální identita. Od loga po firemní styl.
+                            Trička, bannery, vizitky nebo klidně polepy. Vše, na co si šáhnete.
                         </p>
                     </div>
                 </div>
 
-                <!-- Regular Card - Performance -->
+                <!-- Regular Card - Placená reklama -->
                 <div class="service-card">
                     <span class="service-number">05</span>
                     <div>
-                        <i class="service-icon fas fa-tachometer-alt"></i>
-                        <h3 class="service-title">Performance</h3>
+                        <i class="service-icon fas fa-bullhorn"></i>
+                        <h3 class="service-title">Placená reklama</h3>
                         <p class="service-description">
-                            Optimalizace rychlosti. SEO a konverzní strategie.
+                            Facebook, Google, Instagram. Ukážeme Vás lidem.
                         </p>
                     </div>
                 </div>
 
-                <!-- Wide Card - Consulting -->
+                <!-- Wide Card - Sociální sítě -->
                 <div class="service-card service-card--wide">
                     <span class="service-number">06</span>
                     <div class="service-shape"></div>
                     <div>
-                        <i class="service-icon fas fa-lightbulb"></i>
-                        <h3 class="service-title">Digital Consulting</h3>
+                        <i class="service-icon fas fa-share-alt"></i>
+                        <h3 class="service-title">Sociální sítě</h3>
                         <p class="service-description">
-                            Strategické poradenství pro váš digitální růst. Analýza, plánování a implementace.
+                            Vytvoříme strategii, správu a obsah, který baví a funguje.
                         </p>
                     </div>
                 </div>
@@ -3052,10 +3070,10 @@
         
         <div class="container">
             <div class="portfolio-header">
-                <span class="portfolio-label">Naše práce</span>
+                <span class="portfolio-label">Důkazy, ne sliby</span>
                 <h2 class="portfolio-title">Projekty, na které jsme hrdí</h2>
                 <p class="portfolio-subtitle">
-                    Každý projekt je příběh. Tady jsou ty, které vyprávíme nejraději.
+                    (A klienti taky, jinak by nám nedali reference)
                 </p>
             </div>
             
@@ -3130,10 +3148,10 @@
         
         <div class="container">
             <div class="process-header">
-                <span class="process-label">Jak pracujeme</span>
-                <h2 class="process-title">Od nápadu k realitě</h2>
+                <span class="process-label">Bez zbytečných komplikací</span>
+                <h2 class="process-title">5 kroků a je hotovo</h2>
                 <p class="process-subtitle">
-                    Transparentní proces, který vás provede každým krokem vývoje vašeho projektu.
+                    Spolupráce s námi je jednoduchá a přehledná – od prvního nápadu až po finální výsledek.
                 </p>
             </div>
             
@@ -3151,11 +3169,11 @@
                         </div>
                         <div class="process-content">
                             <h3 class="process-step-title">Discovery</h3>
-                            <p class="process-step-description">Analyzujeme vaše potřeby a cíle</p>
-                            <p class="process-step-detail-mobile">Pochopíme váš byznys, zákazníky a co vás odlišuje od konkurence</p>
+                            <p class="process-step-description">Pochopíme, co opravdu chcete</p>
+                            <p class="process-step-detail-mobile">Rozebereme váš byznys, zákazníky a čím jste lepší než konkurence.</p>
                         </div>
                         <div class="process-detail">
-                            <p>Pochopíme váš byznys, zákazníky a co vás odlišuje od konkurence</p>
+                            <p>Rozebereme váš byznys, zákazníky a čím jste lepší než konkurence.</p>
                         </div>
                     </div>
 
@@ -3167,11 +3185,11 @@
                         </div>
                         <div class="process-content">
                             <h3 class="process-step-title">Strategy</h3>
-                            <p class="process-step-description">Vytváříme plán a strukturu</p>
-                            <p class="process-step-detail-mobile">Navrhujeme cestu, kterou povede každý návštěvník až ke konverzi</p>
+                            <p class="process-step-description">Rychlá a jasná nabídka</p>
+                            <p class="process-step-detail-mobile">Žádné týdny čekání. Přesná cena, konkrétní termín a bez nečekaných překvapení.</p>
                         </div>
                         <div class="process-detail">
-                            <p>Navrhujeme cestu, kterou povede každý návštěvník až ke konverzi</p>
+                            <p>Žádné týdny čekání. Přesná cena, konkrétní termín a bez nečekaných překvapení.</p>
                         </div>
                     </div>
 
@@ -3183,11 +3201,11 @@
                         </div>
                         <div class="process-content">
                             <h3 class="process-step-title">Design</h3>
-                            <p class="process-step-description">Navrhujeme vizuální podobu</p>
-                            <p class="process-step-detail-mobile">Váš brand ožívá v každém pixelu - krásně, funkčně, nezapomenutelně</p>
+                            <p class="process-step-description">Design, který funguje</p>
+                            <p class="process-step-detail-mobile">Váš brand ožívá v každém pixelu - hezky, funkčně a nezapomenutelně.</p>
                         </div>
                         <div class="process-detail">
-                            <p>Váš brand ožívá v každém pixelu - krásně, funkčně, nezapomenutelně</p>
+                            <p>Váš brand ožívá v každém pixelu - hezky, funkčně a nezapomenutelně.</p>
                         </div>
                     </div>
 
@@ -3199,11 +3217,11 @@
                         </div>
                         <div class="process-content">
                             <h3 class="process-step-title">Development</h3>
-                            <p class="process-step-description">Převádíme design do kódu</p>
-                            <p class="process-step-detail-mobile">Rychlé načítání, plynulé animace a bezchybný chod na všech zařízeních</p>
+                            <p class="process-step-description">Z nápadu k funkčnímu řešení</p>
+                            <p class="process-step-detail-mobile">Kódujeme, tvoříme, průběžně ukazujeme. Vždy víte v jaké fázi jsme.</p>
                         </div>
                         <div class="process-detail">
-                            <p>Rychlé načítání, plynulé animace a bezchybný chod na všech zařízeních</p>
+                            <p>Kódujeme, tvoříme, průběžně ukazujeme. Vždy víte v jaké fázi jsme.</p>
                         </div>
                     </div>
 
@@ -3215,11 +3233,11 @@
                         </div>
                         <div class="process-content">
                             <h3 class="process-step-title">Launch</h3>
-                            <p class="process-step-description">Spouštíme váš projekt</p>
-                            <p class="process-step-detail-mobile">3, 2, 1... Start! Váš nový web je online a připravený dobývat trh</p>
+                            <p class="process-step-description">Spustíme váš projekt</p>
+                            <p class="process-step-detail-mobile">Spuštěno a otestováno. První měsíc podpory v ceně.</p>
                         </div>
                         <div class="process-detail">
-                            <p>3, 2, 1... Start! Váš nový web je online a připravený dobývat trh</p>
+                            <p>Spuštěno a otestováno. První měsíc podpory v ceně.</p>
                         </div>
                     </div>
                 </div>
@@ -3244,10 +3262,10 @@
         <div class="container">
             <div class="contact-container">
                 <div class="contact-header">
-                    <span class="contact-label">Začněme spolupracovat</span>
-                    <h2 class="contact-title">Připraveni na váš projekt?</h2>
+                    <span class="contact-label">Kontaktujte nás</span>
+                    <h2 class="contact-title">Napište nám. Nekoušeme</h2>
                     <p class="contact-subtitle">
-                        Máte nápad? Potřebujete web? Nebo se jen chcete poradit? Napište nám a ozveme se vám do 24 hodin.
+                        Odpovíme – bez otravných formalit a zbytečného čekání.
                     </p>
                 </div>
                 
@@ -3285,35 +3303,42 @@
                                             <span class="dropdown-checkbox">
                                                 <i class="fas fa-check"></i>
                                             </span>
-                                            <span class="dropdown-option-text">Nový web nebo kompletní redesign</span>
+                                            <span class="dropdown-option-text">Nový web nebo redesign</span>
                                         </label>
                                         <label class="dropdown-option">
-                                            <input type="checkbox" name="services" value="ads">
+                                            <input type="checkbox" name="services" value="branding">
                                             <span class="dropdown-checkbox">
                                                 <i class="fas fa-check"></i>
                                             </span>
-                                            <span class="dropdown-option-text">PPC kampaně (Google Ads, Meta Ads)</span>
+                                            <span class="dropdown-option-text">Logo & branding (offline i online)</span>
                                         </label>
                                         <label class="dropdown-option">
-                                            <input type="checkbox" name="services" value="social">
+                                            <input type="checkbox" name="services" value="graphics">
                                             <span class="dropdown-checkbox">
                                                 <i class="fas fa-check"></i>
                                             </span>
-                                            <span class="dropdown-option-text">Správa a růst sociálních sítí</span>
+                                            <span class="dropdown-option-text">Grafika & video (kompletní produkce)</span>
                                         </label>
                                         <label class="dropdown-option">
-                                            <input type="checkbox" name="services" value="video">
+                                            <input type="checkbox" name="services" value="marketing">
                                             <span class="dropdown-checkbox">
                                                 <i class="fas fa-check"></i>
                                             </span>
-                                            <span class="dropdown-option-text">Grafika a video produkce</span>
+                                            <span class="dropdown-option-text">Marketing & reklama</span>
+                                        </label>
+                                        <label class="dropdown-option">
+                                            <input type="checkbox" name="services" value="longterm">
+                                            <span class="dropdown-checkbox">
+                                                <i class="fas fa-check"></i>
+                                            </span>
+                                            <span class="dropdown-option-text">Dlouhodobá spolupráce / Korporátní řešení</span>
                                         </label>
                                         <label class="dropdown-option">
                                             <input type="checkbox" name="services" value="other">
                                             <span class="dropdown-checkbox">
                                                 <i class="fas fa-check"></i>
                                             </span>
-                                            <span class="dropdown-option-text">Jiná spolupráce</span>
+                                            <span class="dropdown-option-text">Něco jiného</span>
                                         </label>
                                     </div>
                                 </div>
@@ -3339,7 +3364,7 @@
                         <!-- WhatsApp Alternative - MOBILE ONLY -->
                         <div class="contact-quick contact-quick-mobile">
                             <p class="quick-title">Nechcete vyplňovat? Chápu.</p>
-                            <a href="https://wa.me/420123456789" class="whatsapp-button">
+                            <a href="https://wa.me/420728133195" class="whatsapp-button">
                                 <i class="fab fa-whatsapp"></i>
                                 <span class="whatsapp-text">
                                     <strong>Napište na WhatsApp</strong>
@@ -3443,11 +3468,7 @@
                     <div class="footer-about">
                         <h3 class="footer-logo">WEBX</h3>
                         <p class="footer-description">
-                            Kreativní digitální agentura specializující se na prémiový webdesign a vývoj. 
-                            Tvoříme digitální zážitky, které posouvají hranice možného.
-                        </p>
-                        <p class="footer-description">
-                            Věříme, že každý projekt je příležitost vytvořit něco výjimečného.
+                            Jsme WEBX. Weby, branding, grafika, na které se nezapomíná a offline věci, které vypadají skvěle a vydrží. Bez zbytečných formalit a nekonečných meetingů. Jen výsledky, které zaujmou a sem tam trocha humoru.
                         </p>
                     </div>
                     
@@ -3455,12 +3476,12 @@
                     <div class="footer-services">
                         <h4 class="footer-column-title">Služby</h4>
                         <ul class="footer-links">
-                            <li><a href="#services" class="footer-link">Web Design</a></li>
-                            <li><a href="#services" class="footer-link">Development</a></li>
-                            <li><a href="#services" class="footer-link">Branding</a></li>
-                            <li><a href="#services" class="footer-link">Motion Design</a></li>
-                            <li><a href="#services" class="footer-link">Performance</a></li>
-                            <li><a href="#services" class="footer-link">Consulting</a></li>
+                            <li><a href="#services" class="footer-link">Webové stránky</a></li>
+                            <li><a href="#services" class="footer-link">Logo & Branding</a></li>
+                            <li><a href="#services" class="footer-link">Video & Motion</a></li>
+                            <li><a href="#services" class="footer-link">Offline grafika</a></li>
+                            <li><a href="#services" class="footer-link">Placená reklama</a></li>
+                            <li><a href="#services" class="footer-link">Sociální sítě</a></li>
                         </ul>
                     </div>
                     
@@ -3475,7 +3496,7 @@
                         
                         <div class="footer-detail-item">
                             <span class="footer-detail-label">Telefon</span>
-                            <span class="footer-detail-value">+420 123 456 789</span>
+                            <span class="footer-detail-value">+420 728 133 195</span>
                         </div>
                         
                         <div class="footer-detail-item">
@@ -3492,7 +3513,7 @@
             <div class="container">
                 <div class="footer-bottom" style="padding: 0;">
                     <div class="footer-copyright">
-                        © 2025 WEBX. Všechna práva vyhrazena.
+                        © 2025 WEBX. Zkopírovat se dá, ale originál je jen jeden
                     </div>
                     
                     <div class="footer-legal-links">
@@ -3661,7 +3682,7 @@
                 }, "-=0.4");
 
             // FIX 6: Morphing text animation - Fixed typewriter effect
-            const morphWords = ['inovativní', 'precizní', 'efektivní'];
+            const morphWords = ['jedinečné', 'atraktivní', 'precizní'];
             const morphContainer = document.getElementById('heroMorph');
             const cursor = document.querySelector('.hero-title-cursor');
             const textSpan = document.querySelector('.hero-title-morph-text');
